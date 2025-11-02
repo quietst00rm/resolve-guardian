@@ -30,7 +30,7 @@ export const FinalCTA = () => {
           <Button 
             size="lg"
             onClick={scrollToCalculator}
-            className="bg-primary hover:bg-blue-600 text-white px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all"
+            className="bg-primary hover:bg-blue-600 text-foreground px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all"
           >
             Calculate My Tier
           </Button>
