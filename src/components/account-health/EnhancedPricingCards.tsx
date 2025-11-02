@@ -125,10 +125,6 @@ export const EnhancedPricingCards = () => {
               >
                 {tier.cta}
               </Button>
-
-              <p className="text-xs text-center text-muted-foreground mt-2">
-                No credit card required
-              </p>
             </div>
           ))}
         </div>
