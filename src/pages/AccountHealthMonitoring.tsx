@@ -41,14 +41,14 @@ const AccountHealthMonitoring = () => {
       {/* Trust & Authority Section */}
       <TrustAuthoritySection />
 
+      {/* Persona Tabs */}
+      <PersonaTabs />
+
       {/* Interactive FAQ */}
       <InteractiveFAQ />
 
       {/* Testimonials */}
       
-
-      {/* Persona Tabs */}
-      <PersonaTabs />
 
       {/* Final CTA */}
       <FinalCTA />
