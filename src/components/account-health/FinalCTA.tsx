@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Check, Zap } from "lucide-react";
-
 export const FinalCTA = () => {
   const scrollToCalculator = () => {
     const calculator = document.getElementById('pricing-calculator');
-    calculator?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    calculator?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
   };
-
-  return (
-    <section className="hero-gradient-animated py-24">
+  return <section className="hero-gradient-animated py-24">
       <div className="max-w-5xl mx-auto px-6 text-center">
         {/* Eyebrow */}
         <p className="text-sm uppercase tracking-widest text-gray-400 mb-6 font-semibold">
@@ -27,18 +27,10 @@ export const FinalCTA = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
-          <Button 
-            size="lg"
-            onClick={scrollToCalculator}
-            className="bg-primary hover:bg-blue-600 text-white px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all"
-          >
+          <Button size="lg" onClick={scrollToCalculator} className="bg-primary hover:bg-blue-600 text-white px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all">
             Calculate My Tier
           </Button>
-          <Button 
-            size="lg"
-            variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-foreground px-12 py-6 text-xl font-semibold h-auto transition-all"
-          >
+          <Button size="lg" variant="outline" className="border-2 border-white hover:bg-white px-12 py-6 text-xl font-semibold h-auto transition-all text-slate-800">
             Talk to an Expert
           </Button>
         </div>
@@ -64,6 +56,5 @@ export const FinalCTA = () => {
           No contracts • No hidden fees • Cancel anytime • 60-day money-back guarantee
         </p>
       </div>
-    </section>
-  );
+    </section>;
 };
