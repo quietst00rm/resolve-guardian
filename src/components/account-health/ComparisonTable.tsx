@@ -70,7 +70,7 @@ export const ComparisonTable = () => {
               <tr>
                 <th className="py-4 px-6 text-left font-semibold text-lg">Feature</th>
                 <th className="py-4 px-6 text-center font-semibold text-lg">DIY Monitoring</th>
-                <th className="py-4 px-6 text-center font-semibold text-lg border-x-2 border-primary bg-primary bg-opacity-5">
+                <th className="py-4 px-6 text-center font-semibold text-lg border-x-2 border-accent bg-accent/20">
                   Seller Resolve
                 </th>
                 <th className="py-4 px-6 text-center font-semibold text-lg">Typical Competitor</th>
@@ -91,8 +91,8 @@ export const ComparisonTable = () => {
                     {getIcon(row.diy.type)}
                     {row.diy.text}
                   </td>
-                  <td className={`py-4 px-6 text-center border-x-2 border-primary bg-primary bg-opacity-5 font-semibold ${
-                    hoveredRow === index ? 'bg-opacity-10' : ''
+                  <td className={`py-4 px-6 text-center border-x-2 border-accent bg-accent/10 font-semibold transition-colors ${
+                    hoveredRow === index ? 'bg-accent/20' : ''
                   }`}>
                     <span className="text-foreground">
                       {getIcon(row.sellerResolve.type)}
@@ -122,7 +122,7 @@ export const ComparisonTable = () => {
                     {row.diy.text}
                   </span>
                 </div>
-                <div className="flex justify-between items-center p-2 bg-primary bg-opacity-10 rounded border-2 border-primary">
+                <div className="flex justify-between items-center p-2 bg-accent/10 rounded border-2 border-accent">
                   <span className="font-semibold text-foreground">Seller Resolve:</span>
                   <span className="font-semibold text-foreground flex items-center">
                     {getIcon(row.sellerResolve.type)}
