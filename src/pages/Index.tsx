@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Logo } from "@/components/ui/logo";
 
 const Index = () => {
   return (
     <div className="flex min-h-screen items-center justify-center hero-gradient">
       <div className="text-center px-6">
-        <h1 className="mb-6 text-5xl font-bold text-white">Seller Resolve</h1>
+        <div className="mb-8 flex justify-center animate-fade-in">
+          <Logo variant="white" size="xl" />
+        </div>
         <p className="text-xl text-gray-300 mb-8 max-w-2xl">
           Built by sellers, for sellers. Proven processes executed by experienced
           professionals—no hype, just outcomes.

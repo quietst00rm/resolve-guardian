@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/ui/logo";
 
 export const StickyTrustBar = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,10 +37,9 @@ export const StickyTrustBar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center gap-4 opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all">
-              <div className="text-xs font-semibold text-muted-foreground">TRUSTED BY</div>
-            </div>
+          <div className="flex items-center gap-2">
+            <Logo variant="color" size="sm" showText className="hidden sm:flex" />
+            <Logo variant="color" size="sm" className="sm:hidden" />
           </div>
           
           <div className="flex-1 text-center">

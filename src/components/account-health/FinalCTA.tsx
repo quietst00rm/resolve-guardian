@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Check, Zap } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
+
 export const FinalCTA = () => {
   const scrollToCalculator = () => {
     const calculator = document.getElementById('pricing-calculator');
@@ -10,6 +12,11 @@ export const FinalCTA = () => {
   };
   return <section className="hero-gradient-animated py-24">
       <div className="max-w-5xl mx-auto px-6 text-center">
+        {/* Logo */}
+        <div className="mb-6 flex justify-center">
+          <Logo variant="white" size="md" />
+        </div>
+        
         {/* Eyebrow */}
         <p className="text-sm uppercase tracking-widest text-gray-400 mb-6 font-semibold">
           READY TO PROTECT YOUR ACCOUNT?

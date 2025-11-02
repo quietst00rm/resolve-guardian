@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { FloatingDashboard } from "./FloatingDashboard";
+import { Logo } from "@/components/ui/logo";
 
 export const AnimatedGradientHero = () => {
   const scrollToCalculator = () => {
@@ -19,6 +20,11 @@ export const AnimatedGradientHero = () => {
         <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-16 items-center">
           {/* Left Column */}
           <div className="space-y-8">
+            {/* Logo */}
+            <div className="animate-fade-in">
+              <Logo variant="white" size="md" />
+            </div>
+            
             {/* Eyebrow Badge */}
             <div className="inline-block">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase bg-blue-900 bg-opacity-20 text-blue-400 border border-blue-800">
