@@ -12,10 +12,8 @@ import { TestimonialCards } from "@/components/account-health/TestimonialCards";
 import { PersonaTabs } from "@/components/account-health/PersonaTabs";
 import { FinalCTA } from "@/components/account-health/FinalCTA";
 import { StickyMobileFooter } from "@/components/account-health/StickyMobileFooter";
-
 const AccountHealthMonitoring = () => {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Sticky Trust Bar - appears on scroll */}
       <StickyTrustBar />
 
@@ -38,7 +36,7 @@ const AccountHealthMonitoring = () => {
       <ComparisonTable />
 
       {/* Bento Grid Key Features */}
-      <BentoGridFeatures />
+      
 
       {/* Trust & Authority Section */}
       <TrustAuthoritySection />
@@ -47,7 +45,7 @@ const AccountHealthMonitoring = () => {
       <InteractiveFAQ />
 
       {/* Testimonials */}
-      <TestimonialCards />
+      
 
       {/* Persona Tabs */}
       <PersonaTabs />
@@ -57,8 +55,6 @@ const AccountHealthMonitoring = () => {
 
       {/* Sticky Mobile Footer */}
       <StickyMobileFooter />
-    </div>
-  );
+    </div>;
 };
-
 export default AccountHealthMonitoring;
