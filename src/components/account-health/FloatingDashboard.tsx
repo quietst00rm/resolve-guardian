@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, AlertTriangle, TrendingUp } from "lucide-react";
-
 export const FloatingDashboard = () => {
   const [animationStep, setAnimationStep] = useState(0);
-
   useEffect(() => {
     const timer = setInterval(() => {
-      setAnimationStep((prev) => (prev + 1) % 4);
+      setAnimationStep(prev => (prev + 1) % 4);
     }, 1500);
     return () => clearInterval(timer);
   }, []);
-
-  return (
-    <div className="animate-float">
+  return <div className="animate-float">
       <div className="glass-morphism rounded-2xl p-8 shadow-2xl border border-white border-opacity-10 backdrop-blur-md">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
@@ -76,18 +72,15 @@ export const FloatingDashboard = () => {
 
         {/* View Dashboard Link */}
         <div className="mt-6 pt-4 border-t border-white border-opacity-10">
-          <a href="#" className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors flex items-center gap-2">
-            View Full Dashboard
-            <ArrowRight className="h-4 w-4" />
-          </a>
+          
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
-const ArrowRight = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+const ArrowRight = ({
+  className
+}: {
+  className?: string;
+}) => <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-  </svg>
-);
+  </svg>;
