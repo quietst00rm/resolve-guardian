@@ -1,5 +1,4 @@
 import { AnimatedGradientHero } from "@/components/account-health/AnimatedGradientHero";
-import { StickyTrustBar } from "@/components/account-health/StickyTrustBar";
 import { ProblemSolutionSection } from "@/components/account-health/ProblemSolutionSection";
 import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow";
 import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
@@ -14,9 +13,6 @@ import { FinalCTA } from "@/components/account-health/FinalCTA";
 import { StickyMobileFooter } from "@/components/account-health/StickyMobileFooter";
 const AccountHealthMonitoring = () => {
   return <div className="min-h-screen bg-background">
-      {/* Sticky Trust Bar - appears on scroll */}
-      <StickyTrustBar />
-
       {/* Hero Section with Animated Gradient */}
       <AnimatedGradientHero />
 
