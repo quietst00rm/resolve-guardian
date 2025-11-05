@@ -1,77 +1,113 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { ArrowRight } from "lucide-react";
 
 export const InteractivePricingCalculator = () => {
-  const [revenue, setRevenue] = useState(150000);
-  const [showResult, setShowResult] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [answers, setAnswers] = useState({
+    asinCount: "",
+    suspended: "",
+    violationCount: "",
+    monthlyRevenue: 0,
+  });
+  const [tierResult, setTierResult] = useState<any>(null);
 
-  const getTierInfo = (revenue: number) => {
-    if (revenue < 50000) {
+  const formatRevenue = (value: string) => {
+    const numbers = value.replace(/[^0-9]/g, "");
+    if (numbers) {
+      return "$" + parseInt(numbers).toLocaleString("en-US");
+    }
+    return "";
+  };
+
+  const parseRevenue = (formattedValue: string) => {
+    return parseInt(formattedValue.replace(/[^0-9]/g, "")) || 0;
+  };
+
+  const getTierFromRevenue = (revenue: number) => {
+    if (revenue >= 0 && revenue < 250000) {
       return {
-        tier: "Consultation Recommended",
-        price: null,
-        violations: null,
-        color: "text-muted-foreground",
-        bgColor: "bg-gray-100",
-        message: "Based on your revenue, we recommend scheduling a consultation to determine if monitoring is right for your business size."
-      };
-    } else if (revenue >= 50000 && revenue < 250000) {
-      return {
-        tier: "Essential Protection",
+        name: "Essential Protection",
         price: 599,
-        violations: 15,
-        color: "text-accent",
-        bgColor: "bg-green-50",
-        badge: "Best for $50K–$250K/mo"
+        priceClass: "text-accent",
+        badge: "Best for $0–$250K/mo",
       };
     } else if (revenue >= 250000 && revenue < 1000000) {
       return {
-        tier: "Complete Coverage",
+        name: "Complete Coverage",
         price: 1299,
-        violations: 35,
-        color: "text-primary",
-        bgColor: "bg-blue-50",
-        badge: "Best for $250K–$1M/mo"
+        priceClass: "text-primary",
+        badge: "Best for $250K–$1M/mo",
       };
     } else {
       return {
-        tier: "Unlimited Protection",
+        name: "Unlimited Protection",
         price: 2499,
-        violations: 60,
-        color: "text-purple-600",
-        bgColor: "bg-purple-50",
-        badge: "Best for $1M+/mo"
+        priceClass: "text-purple-600",
+        badge: "Best for $1M+/mo",
       };
     }
   };
 
-  const tierInfo = getTierInfo(revenue);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0
-    }).format(value);
+  const nextStep = (step: number) => {
+    if (step === 1) {
+      const asinInput = document.getElementById("asinCount") as HTMLInputElement;
+      if (!asinInput?.value || parseInt(asinInput.value) < 0) {
+        asinInput?.focus();
+        return;
+      }
+      setAnswers({ ...answers, asinCount: asinInput.value });
+    } else if (step === 2) {
+      if (!answers.suspended) return;
+    } else if (step === 3) {
+      const violationInput = document.getElementById("violationCount") as HTMLInputElement;
+      if (!violationInput?.value || parseInt(violationInput.value) < 0) {
+        violationInput?.focus();
+        return;
+      }
+      setAnswers({ ...answers, violationCount: violationInput.value });
+    }
+    setCurrentStep(step + 1);
   };
 
-  const getSliderColor = () => {
-    if (revenue < 50000) return "bg-gray-400";
-    if (revenue < 250000) return "bg-accent";
-    if (revenue < 1000000) return "bg-primary";
-    return "bg-purple-600";
+  const previousStep = () => {
+    setCurrentStep(currentStep - 1);
   };
 
-  const handleCalculate = () => {
-    setShowResult(true);
+  const selectChoice = (value: string) => {
+    setAnswers({ ...answers, suspended: value });
+    setTimeout(() => {
+      nextStep(2);
+    }, 300);
   };
 
-  const scrollToTier = () => {
-    const pricingSection = document.getElementById('pricing-tiers');
-    pricingSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const calculateTier = () => {
+    const revenueInput = document.getElementById("monthlyRevenue") as HTMLInputElement;
+    if (!revenueInput?.value) {
+      revenueInput?.focus();
+      return;
+    }
+
+    const revenue = parseRevenue(revenueInput.value);
+    setAnswers({ ...answers, monthlyRevenue: revenue });
+    setIsCalculating(true);
+
+    setTimeout(() => {
+      const tier = getTierFromRevenue(revenue);
+      setTierResult(tier);
+      setIsCalculating(false);
+      setShowResults(true);
+    }, 1500);
   };
+
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById("pricing-tiers");
+    pricingSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const progressPercentage = showResults ? 100 : (currentStep / 4) * 100;
 
   return (
     <section id="pricing-calculator" className="bg-background py-16">
@@ -81,105 +117,216 @@ export const InteractivePricingCalculator = () => {
             Not Sure Which Tier Fits Your Business?
           </h3>
 
-          <div className="space-y-8">
-            {/* Revenue Display */}
-            <div className="text-center">
-              <label className="text-lg font-medium text-foreground mb-3 block">
-                Enter your monthly revenue:
-              </label>
-              <div className={`text-4xl font-bold ${tierInfo.color} mb-6 transition-colors duration-300`}>
-                {formatCurrency(revenue)}
+          {/* Progress Bar */}
+          {!showResults && (
+            <div className="mb-8">
+              <div className="text-center text-sm font-semibold text-muted-foreground mb-3">
+                {isCalculating ? "Calculating..." : `Question ${currentStep} of 4`}
+              </div>
+              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full transition-all duration-300"
+                  style={{ width: `${progressPercentage}%` }}
+                />
               </div>
             </div>
+          )}
 
-            {/* Slider with Zone Colors */}
-            <div className="relative px-2">
-              <Slider
-                value={[revenue]}
-                onValueChange={(value) => {
-                  setRevenue(value[0]);
-                  setShowResult(false);
-                }}
-                min={0}
-                max={2000000}
-                step={10000}
-                className="w-full"
-              />
-              
-              {/* Zone Labels */}
-              <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                <span>$0</span>
-                <span className="text-accent">$250K</span>
-                <span className="text-primary">$1M</span>
-                <span className="text-purple-600">$2M+</span>
-              </div>
-
-              {/* Visual Zone Indicator */}
-              <div className="mt-6 h-2 rounded-full overflow-hidden flex">
-                <div className="w-1/4 bg-gray-300"></div>
-                <div className="w-1/4 bg-accent bg-opacity-30"></div>
-                <div className="w-1/4 bg-primary bg-opacity-30"></div>
-                <div className="w-1/4 bg-purple-600 bg-opacity-30"></div>
-              </div>
-            </div>
-
-            {/* Calculate Button */}
-            <Button 
-              onClick={handleCalculate}
-              className="w-full bg-primary hover:bg-blue-600 text-white py-6 text-lg font-semibold h-auto"
+          {/* Step Container */}
+          <div className="relative min-h-[350px]">
+            {/* Step 1: ASINs Count */}
+            <div
+              className={`transition-all duration-300 ${
+                currentStep === 1
+                  ? "opacity-100 translate-x-0 relative"
+                  : "opacity-0 absolute inset-0 pointer-events-none"
+              }`}
             >
-              Calculate My Tier
-            </Button>
+              <label className="text-2xl font-semibold text-foreground mb-6 block text-center">
+                How many ASINs are you currently managing?
+              </label>
+              <div className="mb-8">
+                <input
+                  type="number"
+                  id="asinCount"
+                  className="w-full p-4 text-lg border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  placeholder="Enter number of ASINs"
+                  min="0"
+                  onKeyPress={(e) => e.key === "Enter" && nextStep(1)}
+                />
+              </div>
+              <Button onClick={() => nextStep(1)} className="w-full py-6 text-lg" size="lg">
+                Next
+              </Button>
+            </div>
 
-            {/* Results */}
-            {showResult && (
-              <div className={`${tierInfo.bgColor} rounded-xl p-6 animate-fade-in space-y-4`}>
-                {tierInfo.price ? (
-                  <>
-                    <div className="text-center">
-                      <div className="inline-block px-3 py-1 bg-white rounded-full text-sm font-semibold text-foreground mb-3">
-                        {tierInfo.badge}
-                      </div>
-                      <h4 className={`text-2xl font-bold ${tierInfo.color} mb-2`}>
-                        {tierInfo.tier}
-                      </h4>
-                      <p className="text-foreground text-lg">
-                        Based on <strong>{formatCurrency(revenue)}</strong> monthly revenue, we recommend <strong>{tierInfo.tier}</strong> which includes <strong>{tierInfo.violations} violations</strong> per month and costs <strong>${tierInfo.price}/month</strong>.
-                      </p>
-                    </div>
+            {/* Step 2: Suspension History */}
+            <div
+              className={`transition-all duration-300 ${
+                currentStep === 2
+                  ? "opacity-100 translate-x-0 relative"
+                  : "opacity-0 absolute inset-0 pointer-events-none"
+              }`}
+            >
+              <label className="text-2xl font-semibold text-foreground mb-6 block text-center">
+                Have you been suspended before?
+              </label>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <button
+                  onClick={() => selectChoice("Yes")}
+                  className={`p-6 text-lg font-semibold border-2 rounded-lg transition-all ${
+                    answers.suspended === "Yes"
+                      ? "bg-primary text-white border-primary"
+                      : "bg-card border-border hover:border-primary hover:bg-blue-50"
+                  }`}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => selectChoice("No")}
+                  className={`p-6 text-lg font-semibold border-2 rounded-lg transition-all ${
+                    answers.suspended === "No"
+                      ? "bg-primary text-white border-primary"
+                      : "bg-card border-border hover:border-primary hover:bg-blue-50"
+                  }`}
+                >
+                  No
+                </button>
+              </div>
+              <div className="flex gap-4">
+                <Button onClick={previousStep} variant="outline" className="flex-1 py-6">
+                  Back
+                </Button>
+                <Button onClick={() => nextStep(2)} className="flex-1 py-6" disabled={!answers.suspended}>
+                  Next
+                </Button>
+              </div>
+            </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                      <Button 
-                        onClick={scrollToTier}
-                        className={`flex-1 ${getSliderColor()} hover:opacity-90 text-white h-auto py-3`}
-                      >
-                        Get started with {tierInfo.tier}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        onClick={() => window.location.href = '#contact'}
-                        className="flex-1 h-auto py-3"
-                      >
-                        Schedule a call
-                      </Button>
+            {/* Step 3: Monthly Violations */}
+            <div
+              className={`transition-all duration-300 ${
+                currentStep === 3
+                  ? "opacity-100 translate-x-0 relative"
+                  : "opacity-0 absolute inset-0 pointer-events-none"
+              }`}
+            >
+              <label className="text-2xl font-semibold text-foreground mb-6 block text-center">
+                How many monthly violations do you get on average?
+              </label>
+              <div className="mb-8">
+                <input
+                  type="number"
+                  id="violationCount"
+                  className="w-full p-4 text-lg border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  placeholder="Enter average monthly violations"
+                  min="0"
+                  onKeyPress={(e) => e.key === "Enter" && nextStep(3)}
+                />
+              </div>
+              <div className="flex gap-4">
+                <Button onClick={previousStep} variant="outline" className="flex-1 py-6">
+                  Back
+                </Button>
+                <Button onClick={() => nextStep(3)} className="flex-1 py-6">
+                  Next
+                </Button>
+              </div>
+            </div>
+
+            {/* Step 4: Monthly Revenue */}
+            <div
+              className={`transition-all duration-300 ${
+                currentStep === 4 && !isCalculating
+                  ? "opacity-100 translate-x-0 relative"
+                  : "opacity-0 absolute inset-0 pointer-events-none"
+              }`}
+            >
+              <label className="text-2xl font-semibold text-foreground mb-6 block text-center">
+                What is your monthly revenue?
+              </label>
+              <div className="mb-8">
+                <input
+                  type="text"
+                  id="monthlyRevenue"
+                  className="w-full p-4 text-lg border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                  placeholder="$0"
+                  onChange={(e) => {
+                    e.target.value = formatRevenue(e.target.value);
+                  }}
+                  onKeyPress={(e) => e.key === "Enter" && calculateTier()}
+                />
+              </div>
+              <div className="flex gap-4">
+                <Button onClick={previousStep} variant="outline" className="flex-1 py-6">
+                  Back
+                </Button>
+                <Button onClick={calculateTier} className="flex-1 py-6">
+                  Calculate My Tier
+                </Button>
+              </div>
+            </div>
+
+            {/* Calculating Screen */}
+            {isCalculating && (
+              <div className="text-center py-12 animate-fade-in">
+                <div className="w-12 h-12 border-4 border-muted border-t-primary rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-lg text-muted-foreground font-medium">
+                  Analyzing your business profile...
+                </p>
+              </div>
+            )}
+
+            {/* Results Screen */}
+            {showResults && tierResult && (
+              <div className="text-center animate-fade-in">
+                <div className="inline-block px-6 py-2 bg-blue-50 rounded-full text-sm font-semibold text-primary mb-4">
+                  {tierResult.badge}
+                </div>
+                <h2 className="text-4xl font-bold text-foreground mb-2">{tierResult.name}</h2>
+                <div className={`text-5xl font-bold mb-6 ${tierResult.priceClass}`}>
+                  ${tierResult.price.toLocaleString()}
+                  <span className="text-2xl font-normal">/month</span>
+                </div>
+
+                <p className="text-lg text-muted-foreground mb-8">
+                  Based on your business profile, you fall into our <strong>{tierResult.name}</strong> tier
+                  at <strong>${tierResult.price.toLocaleString()}/month</strong>
+                </p>
+
+                {/* Summary Box */}
+                <div className="bg-muted rounded-xl p-6 mb-8 text-left">
+                  <h4 className="text-center text-base font-semibold text-muted-foreground mb-4">
+                    Your Business Profile
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between py-3 border-b border-border">
+                      <span className="text-muted-foreground">ASINs Managing:</span>
+                      <span className="font-semibold text-foreground">{answers.asinCount} ASINs</span>
                     </div>
-                  </>
-                ) : (
-                  <div className="text-center space-y-4">
-                    <p className="text-foreground text-lg">
-                      {tierInfo.message}
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => window.location.href = '#contact'}
-                      className="h-auto py-3"
-                    >
-                      Schedule a Consultation
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex justify-between py-3 border-b border-border">
+                      <span className="text-muted-foreground">Previous Suspension:</span>
+                      <span className="font-semibold text-foreground">{answers.suspended}</span>
+                    </div>
+                    <div className="flex justify-between py-3 border-b border-border">
+                      <span className="text-muted-foreground">Monthly Violations:</span>
+                      <span className="font-semibold text-foreground">
+                        {answers.violationCount} per month
+                      </span>
+                    </div>
+                    <div className="flex justify-between py-3">
+                      <span className="text-muted-foreground">Monthly Revenue:</span>
+                      <span className="font-semibold text-foreground">
+                        ${answers.monthlyRevenue.toLocaleString("en-US")}
+                      </span>
+                    </div>
                   </div>
-                )}
+                </div>
+
+                <Button onClick={scrollToPricing} size="lg" className="px-8 py-6 text-lg">
+                  Start {tierResult.name}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             )}
           </div>

@@ -90,7 +90,7 @@ export const VisualProcessFlow = () => {
                     onClick={() => setExpandedStep(isExpanded ? null : index)}
                     className="text-primary hover:underline font-medium inline-flex items-center gap-2 mt-4 transition-all"
                   >
-                    See example
+                    Learn More
                     <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                   </button>
 
