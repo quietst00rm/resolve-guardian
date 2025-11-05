@@ -14,7 +14,7 @@ import { StickyMobileFooter } from "@/components/account-health/StickyMobileFoot
 const AccountHealthMonitoring = () => {
   return <div className="min-h-screen bg-background">
       {/* Sticky Trust Bar - appears on scroll */}
-      <StickyTrustBar />
+      
 
       {/* Hero Section with Animated Gradient */}
       <AnimatedGradientHero />
