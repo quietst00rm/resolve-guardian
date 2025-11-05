@@ -10,7 +10,7 @@ export const BentoGridFeatures = () => {
             Why Sellers Choose Seller Resolve
           </h2>
           <p className="text-xl text-muted-foreground">
-            Protection designed by former Amazon insiders
+            Proactive protection that scales with your business
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export const BentoGridFeatures = () => {
                 <div className="bg-background p-4 rounded-lg">
                   <div className="flex items-center gap-3 text-sm text-muted-foreground">
                     <div className="w-2 h-2 bg-accent rounded-full"></div>
-                    <span>Live violation dashboard access</span>
+                    <span>Transparent violation tracking</span>
                   </div>
                 </div>
               </div>
@@ -68,7 +68,7 @@ export const BentoGridFeatures = () => {
               24-Hour Response Time
             </h3>
             <p className="text-base text-muted-foreground leading-relaxed">
-              Whether you're on Essential or Unlimited, we respond to every violation within 24 hours. No tiered response times. Fast resolution is standard, not premium.
+              Whether you're on Essential or Unlimited, we address every violation within 24 hours. No tiered response times. Fast resolution is standard, not premium.
             </p>
             <div className="mt-6 inline-flex items-center gap-2 text-primary font-bold text-4xl">
               24<span className="text-sm font-normal text-muted-foreground">hr</span>

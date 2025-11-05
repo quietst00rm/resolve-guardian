@@ -29,7 +29,7 @@ export const FinalCTA = () => {
 
         {/* Subheadline */}
         <p className="text-2xl text-gray-300 mb-10 leading-relaxed">
-          24/7 monitoring + expert POA handling starting at $599/month. Get started in under 5 minutes.
+          24/7 monitoring + expert POA handling starting at $599/month. Protect your revenue proactively.
         </p>
 
         {/* CTA Buttons */}
@@ -46,21 +46,21 @@ export const FinalCTA = () => {
         <div className="flex flex-wrap justify-center gap-8 mb-8">
           <div className="flex items-center gap-2 text-sm text-gray-400">
             <Shield className="h-5 w-5" />
-            <span>Your Seller Central access secured through Amazon's official Preferred Vendor Network</span>
+            <span>American-based team with Amazon expertise</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-400">
             <Check className="h-5 w-5" />
-            <span>Free reinstatement if suspended while following our guidance</span>
+            <span>Address violations within 24 hours</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-400">
             <Zap className="h-5 w-5" />
-            <span>24-hour response time guaranteed at all tiers</span>
+            <span>POA drafting and submission included</span>
           </div>
         </div>
 
         {/* Reassurance Text */}
         <p className="text-sm text-gray-500">
-          No contracts • No hidden fees • Cancel anytime • 60-day money-back guarantee
+          No contracts • No hidden fees • Cancel anytime with 30 days notice
         </p>
       </div>
     </section>;

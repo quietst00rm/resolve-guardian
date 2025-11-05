@@ -7,7 +7,7 @@ export const EnhancedPricingCards = () => {
     name: "Essential Protection",
     price: 599,
     badge: "Best for $50K–$250K/mo revenue",
-    features: ["Daily violation monitoring (24/7 coverage)", "Up to 15 violations resolved per month", "POA drafting + submission on your behalf", "Weekly AI-generated account health reports", "Email support (24-hour response time)", "Live violation tracking access"],
+    features: ["Daily violation monitoring (24/7 coverage)", "Up to 15 violations resolved per month", "POA drafting + submission on your behalf", "Weekly account health reports", "Email support (24-hour response time)", "Live violation tracking access"],
     cta: "Start Essential Protection",
     popular: false
   }, {
@@ -15,7 +15,7 @@ export const EnhancedPricingCards = () => {
     price: 1299,
     badge: "Best for $250K–$1M/mo revenue",
     additionalHeader: "Everything in Essential, plus:",
-    features: ["Up to 35 violations resolved per month", "Priority handling during Q4/Prime Day", "Daily status updates during active violations", "Quarterly proactive compliance audit", "Phone/video support available", "Dedicated account manager"],
+    features: ["Up to 35 violations resolved per month", "Priority handling during Q4/Prime Day", "Weekly account health reports", "Quarterly proactive compliance audit", "Phone/video support available", "Dedicated account manager"],
     cta: "Start Complete Coverage",
     popular: true
   }, {
@@ -23,7 +23,7 @@ export const EnhancedPricingCards = () => {
     price: 2499,
     badge: "Best for $1M+/mo revenue",
     additionalHeader: "Everything in Complete, plus:",
-    features: ["Up to 60 violations resolved per month", "Daily check-ins during any active violation", "Monthly 30-minute strategy call", "Bi-annual deep-dive compliance audit", "Direct phone/text line to account manager", "Executive escalation handling", "Priority queue for all POA drafting"],
+    features: ["Up to 60 violations resolved per month", "Weekly account health reports", "Monthly 30-minute strategy call", "Bi-annual deep-dive compliance audit", "Direct phone/text line to account manager", "Executive escalation handling", "Priority queue for all POA drafting"],
     cta: "Start Unlimited Protection",
     popular: false
   }];
@@ -161,7 +161,7 @@ export const EnhancedPricingCards = () => {
           <h3 className="text-white text-2xl font-semibold mb-2">
             Doing $5M+ monthly or managing multiple accounts?
           </h3>
-          <a href="#contact" className="text-white text-xl font-semibold hover:underline inline-flex items-center gap-2">
+          <a href="mailto:contact@sellerresolve.com" className="text-white text-xl font-semibold hover:underline inline-flex items-center gap-2">
             Talk to us about custom enterprise pricing →
           </a>
         </div>

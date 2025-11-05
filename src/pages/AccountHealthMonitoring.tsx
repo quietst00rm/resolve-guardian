@@ -8,7 +8,6 @@ import { ComparisonTable } from "@/components/account-health/ComparisonTable";
 import { BentoGridFeatures } from "@/components/account-health/BentoGridFeatures";
 import { TrustAuthoritySection } from "@/components/account-health/TrustAuthoritySection";
 import { InteractiveFAQ } from "@/components/account-health/InteractiveFAQ";
-import { TestimonialCards } from "@/components/account-health/TestimonialCards";
 import { PersonaTabs } from "@/components/account-health/PersonaTabs";
 import { FinalCTA } from "@/components/account-health/FinalCTA";
 import { StickyMobileFooter } from "@/components/account-health/StickyMobileFooter";

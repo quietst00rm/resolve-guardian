@@ -44,7 +44,7 @@ export const StickyTrustBar = () => {
           
           <div className="flex-1 text-center">
             <p className="text-sm font-medium text-foreground">
-              Trusted by sellers protecting <span className="text-primary font-bold">$47M+</span> monthly revenue
+              Trusted by sellers protecting <span className="text-primary font-bold">$7M+</span> monthly revenue
             </p>
           </div>
           

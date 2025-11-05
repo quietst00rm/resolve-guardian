@@ -6,7 +6,7 @@ export const TestimonialCards = () => {
     revenue: "$400K/month",
     photo: "M",
     rating: 5,
-    quote: "After paying $3,950 to get my account back, signing up for monitoring at $599/month was the easiest decision I've ever made. Haven't had a single issue in 18 months. Worth every penny for peace of mind.",
+    quote: "After getting my account reinstated, signing up for monitoring at $599/month was the easiest decision I've ever made. Haven't had a single issue in 18 months. Worth every penny for peace of mind.",
     metric: "18 months suspension-free"
   }, {
     name: "Sarah K.",

@@ -19,10 +19,10 @@ export const ProblemSolutionSection = () => {
             <div className="bg-card p-6 rounded-xl shadow-md border-l-4 border-red-500">
               <div className="text-5xl font-bold text-foreground mb-2 flex items-center gap-2">
                 <DollarSign className="h-10 w-10" />
-                8,000
+                72
               </div>
               <div className="text-sm text-muted-foreground">
-                Average cost of two suspensions in 60 days
+                Critical hours after reinstatement—when your account is at highest risk
               </div>
             </div>
           </div>
@@ -44,10 +44,10 @@ export const ProblemSolutionSection = () => {
             <div className="bg-card p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow border-l-4 border-red-500 animate-fade-in" style={{ animationDelay: '100ms' }}>
               <div className="text-4xl mb-3">💸</div>
               <h3 className="text-xl font-semibold text-foreground mb-3">
-                $3,950 reinstatement, then suspended again in 6 weeks
+                Amazon holds your funds while you scramble to fix violations
               </h3>
               <p className="text-base text-muted-foreground leading-relaxed">
-                We've seen this pattern repeatedly. Pay for reinstatement, breathe easy, then get hit again.
+                Every day your account is down means lost revenue and cash flow problems. Prevention is infinitely cheaper than emergency response.
               </p>
             </div>
 

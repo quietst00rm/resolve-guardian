@@ -65,12 +65,12 @@ export const AnimatedGradientHero = () => {
             <div className="flex flex-wrap gap-6 items-center pt-6 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <span className="text-yellow-400 text-base">★★★★★</span>
-                <span>4.9/5 from 200+ sellers</span>
+                <span>4.9/5 from 30+ sellers</span>
               </div>
               <div className="hidden sm:block h-4 w-px bg-gray-700"></div>
-              <span>No contracts • 60-day guarantee</span>
+              <span>Cancel with 30 days notice</span>
               <div className="hidden sm:block h-4 w-px bg-gray-700"></div>
-              <span>Former Amazon team</span>
+              <span>American-based team</span>
             </div>
           </div>
 

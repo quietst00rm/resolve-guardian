@@ -74,17 +74,17 @@ export const PersonaTabs = () => {
     },
     {
       id: "high-risk",
-      label: "High-Risk Category",
+      label: "Complex Cases",
       icon: AlertCircle,
       theme: personaThemes['high-risk'],
-      headline: "Selling Topical, Ingestible, or Children's Products?",
-      description: "High-regulation categories face constant scrutiny. Safety complaints, MSDS requirements, COA requests, and manufacturing documentation challenges. Our team knows exactly what Amazon's looking for in these complex cases.",
+      headline: "Dealing With Compliance-Heavy Categories?",
+      description: "High-regulation categories face constant scrutiny. Safety complaints, documentation requirements, and complex policy challenges. Our team knows exactly what Amazon's looking for in these complex cases and helps you stay ahead.",
       stat: "3x",
       statLabel: "Higher violation rate",
       recommendedTier: "Complete or Unlimited",
-      quote: "Selling supplements is a minefield. Their expertise with documentation requirements has been invaluable.",
+      quote: "Their expertise with complex documentation requirements has been invaluable for our business.",
       quoteAuthor: "David R.",
-      quoteRole: "Health & Wellness Seller"
+      quoteRole: "Specialty Products Seller"
     }
   ];
 

@@ -10,7 +10,7 @@ export const TrustAuthoritySection = () => {
   const trustMetrics = [
     {
       icon: Users,
-      value: "2,500+",
+      value: "375+",
       label: "Sellers Protected",
       description: "Active accounts monitored daily"
     },
@@ -28,17 +28,17 @@ export const TrustAuthoritySection = () => {
     },
     {
       icon: TrendingUp,
-      value: "45K+",
+      value: "6,750+",
       label: "Cases Handled",
       description: "Successful resolutions"
     }
   ];
 
   const credentials = [
-    "Former Amazon Seller Performance Team Members",
+    "Former Amazonians with deep platform expertise",
     "Certified Amazon Policy Experts",
     "Direct Relationships with Amazon Support Teams",
-    "Proprietary Violation Detection Technology",
+    "Proprietary violation tracking, analysis, and strategy technology",
     "24/7 Account Monitoring Infrastructure"
   ];
 
