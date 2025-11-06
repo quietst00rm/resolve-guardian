@@ -4,9 +4,9 @@ import { FloatingDashboard } from "./FloatingDashboard";
 import { Logo } from "@/components/ui/logo";
 
 export const AnimatedGradientHero = () => {
-  const scrollToCalculator = () => {
-    const calculator = document.getElementById('pricing-calculator');
-    calculator?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const scrollToWizard = () => {
+    const wizard = document.getElementById('protection-wizard');
+    wizard?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -46,10 +46,10 @@ export const AnimatedGradientHero = () => {
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <Button 
                 size="lg"
-                onClick={scrollToCalculator}
+                onClick={scrollToWizard}
                 className="bg-primary hover:bg-blue-600 text-white px-8 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 h-auto"
               >
-                Calculate Your Tier
+                Find Your Protection Plan
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               

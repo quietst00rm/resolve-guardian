@@ -353,7 +353,7 @@ export const ProtectionWizard = () => {
               Find Your Protection Plan
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Answer a few questions about your Amazon business to receive your personalized protection recommendation.
+              Answer a few questions to receive your personalized tier recommendation and pricing.
             </p>
           </div>
         )}
