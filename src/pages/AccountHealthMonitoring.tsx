@@ -3,7 +3,7 @@ import { StickyTrustBar } from "@/components/account-health/StickyTrustBar";
 import { ProblemSolutionSection } from "@/components/account-health/ProblemSolutionSection";
 import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow";
 import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
-import { EnhancedPricingCards } from "@/components/account-health/EnhancedPricingCards";
+import { ProtectionWizard } from "@/components/account-health/ProtectionWizard";
 import { ComparisonTable } from "@/components/account-health/ComparisonTable";
 import { BentoGridFeatures } from "@/components/account-health/BentoGridFeatures";
 import { TrustAuthoritySection } from "@/components/account-health/TrustAuthoritySection";
@@ -28,8 +28,8 @@ const AccountHealthMonitoring = () => {
       {/* Interactive Pricing Calculator */}
       <InteractivePricingCalculator />
 
-      {/* Enhanced Pricing Cards */}
-      <EnhancedPricingCards />
+      {/* Protection Wizard - Interactive Plan Selector */}
+      <ProtectionWizard />
 
       {/* Comparison Table */}
       <ComparisonTable />
