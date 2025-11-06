@@ -212,12 +212,14 @@ export const ProtectionWizard = () => {
     }
   }, []);
 
-  // Save to localStorage when answers change
+  // Save to localStorage when answers change (but not confirmation screen)
   useEffect(() => {
-    localStorage.setItem("protectionWizardData", JSON.stringify({
-      answers,
-      currentStep
-    }));
+    if (currentStep !== 12) {
+      localStorage.setItem("protectionWizardData", JSON.stringify({
+        answers,
+        currentStep
+      }));
+    }
   }, [answers, currentStep]);
 
   const calculateTier = (monthlyRevenue: number): string => {
@@ -305,12 +307,35 @@ export const ProtectionWizard = () => {
     return basePlanPrice + addOnsTotal;
   };
 
+  const handleReset = () => {
+    setCurrentStep(1);
+    setAnswers({
+      asins: "",
+      suspendedBefore: "",
+      violations: "",
+      revenue: "",
+      sellerType: "",
+      brandRegistry: "",
+      fulfillment: "",
+      email: "",
+      phone: ""
+    });
+    setAssignedTier("");
+    setSelectedAddOns([]);
+    localStorage.removeItem("protectionWizardData");
+    
+    // Smooth scroll to top of wizard
+    document.getElementById("protection-wizard")?.scrollIntoView({ 
+      behavior: "smooth", 
+      block: "start" 
+    });
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     
     // Simulate email sending
     setTimeout(() => {
-      localStorage.removeItem("protectionWizardData");
       setIsSubmitting(false);
       setCurrentStep(12);
       
@@ -776,11 +801,11 @@ export const ProtectionWizard = () => {
                 </div>
 
                 <Button
-                  onClick={() => window.location.href = "/"}
-                  variant="outline"
+                  onClick={handleReset}
+                  variant="default"
                   size="lg"
                 >
-                  Return to Homepage
+                  Start New Assessment
                 </Button>
               </div>
             )}
