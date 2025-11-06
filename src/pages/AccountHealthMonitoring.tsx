@@ -26,7 +26,7 @@ const AccountHealthMonitoring = () => {
       <VisualProcessFlow />
 
       {/* Interactive Pricing Calculator */}
-      <InteractivePricingCalculator />
+      
 
       {/* Protection Wizard - Interactive Plan Selector */}
       <ProtectionWizard />
