@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Check, ChevronDown } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const tiers = [{
   name: "GUARDIAN",
@@ -160,6 +160,45 @@ export const TierOverview = () => {
         {/* Tier Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch mb-12">
           {tiers.map(tier => <TierCard key={tier.name} tier={tier} />)}
+        </div>
+
+        {/* Suspension Coverage Banner */}
+        <div className="mb-12">
+          <div className="bg-[hsl(217,91%,97%)] border-2 border-blue-600 rounded-2xl p-8 md:p-12">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+              {/* Shield Icon */}
+              <div className="flex-shrink-0 mx-auto md:mx-0">
+                <ShieldCheck className="h-16 w-16 text-blue-600" strokeWidth={1.5} />
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                  Every Plan Includes Full Suspension Protection
+                </h2>
+                <p className="text-base text-gray-600 leading-relaxed mb-6">
+                  If your account gets suspended, we immediately write your Plan of Action at no additional cost. 
+                  Expert reinstatement support is included in all monitoring plans.
+                </p>
+
+                {/* Badges */}
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 rounded-full">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span className="text-sm font-medium text-gray-900">Expert POA Writing</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 rounded-full">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span className="text-sm font-medium text-gray-900">48-Hour Turnaround</span>
+                  </div>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 rounded-full">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span className="text-sm font-medium text-gray-900">Unlimited Revisions</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Below Cards Clarification */}
