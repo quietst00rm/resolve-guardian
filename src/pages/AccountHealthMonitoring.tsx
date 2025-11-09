@@ -11,7 +11,6 @@ import { BentoGridFeatures } from "@/components/account-health/BentoGridFeatures
 import { TrustAuthoritySection } from "@/components/account-health/TrustAuthoritySection";
 import { InteractiveFAQ } from "@/components/account-health/InteractiveFAQ";
 import { PersonaTabs } from "@/components/account-health/PersonaTabs";
-import { StickyMobileFooter } from "@/components/account-health/StickyMobileFooter";
 const AccountHealthMonitoring = () => {
   return <div className="min-h-screen bg-background">
       {/* Sticky Trust Bar - appears on scroll */}
@@ -56,8 +55,6 @@ const AccountHealthMonitoring = () => {
       {/* Testimonials */}
 
 
-      {/* Sticky Mobile Footer */}
-      <StickyMobileFooter />
     </div>;
 };
 export default AccountHealthMonitoring;
