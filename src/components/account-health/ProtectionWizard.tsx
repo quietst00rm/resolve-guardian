@@ -369,12 +369,12 @@ export const ProtectionWizard = () => {
   };
 
   return (
-    <section id="protection-wizard" className="bg-background py-20">
+    <section id="protection-wizard" className="bg-muted/30 py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         {currentStep <= 9 && (
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Find Your Protection Plan
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
