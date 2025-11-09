@@ -1,4 +1,5 @@
-import { ArrowRight, Check } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const tiers = [{
   name: "GUARDIAN",
@@ -55,6 +56,8 @@ const TierCard = ({
 }: {
   tier: typeof tiers[0];
 }) => {
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
+  
   const scrollToWizard = () => {
     const wizard = document.getElementById('protection-wizard');
     wizard?.scrollIntoView({
@@ -62,6 +65,9 @@ const TierCard = ({
       block: 'start'
     });
   };
+
+  const displayedFeatures = showAllFeatures ? tier.features : tier.features.slice(0, 5);
+  const hasMoreFeatures = tier.features.length > 5;
   
   return (
     <div className="relative flex flex-col bg-white rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-8 min-h-[520px]">
@@ -94,14 +100,25 @@ const TierCard = ({
       )}
 
       {/* Features */}
-      <ul className="space-y-3 mb-8 flex-grow">
-        {tier.features.map((feature, idx) => (
+      <ul className="space-y-3 mb-4 flex-grow">
+        {displayedFeatures.map((feature, idx) => (
           <li key={idx} className="flex items-start">
             <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
             <span className="text-gray-700 leading-relaxed">{feature}</span>
           </li>
         ))}
       </ul>
+
+      {/* Show All Features Toggle */}
+      {hasMoreFeatures && (
+        <button
+          onClick={() => setShowAllFeatures(!showAllFeatures)}
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 mb-8 transition-colors"
+        >
+          {showAllFeatures ? 'Show less' : 'Show all features'}
+          <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAllFeatures ? 'rotate-180' : ''}`} />
+        </button>
+      )}
 
       {/* CTA Button */}
       <div className="mt-auto">

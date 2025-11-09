@@ -5,6 +5,7 @@ import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow
 import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
 import { TierOverview } from "@/components/account-health/TierOverview";
 import { ProtectionWizard } from "@/components/account-health/ProtectionWizard";
+import { SuspensionCoverageBanner } from "@/components/account-health/SuspensionCoverageBanner";
 import { TierComparisonTable } from "@/components/account-health/TierComparisonTable";
 import { ComparisonTable } from "@/components/account-health/ComparisonTable";
 import { BentoGridFeatures } from "@/components/account-health/BentoGridFeatures";
@@ -31,6 +32,9 @@ const AccountHealthMonitoring = () => {
 
       {/* Tier Overview Display */}
       <TierOverview />
+
+      {/* Suspension Coverage Banner */}
+      <SuspensionCoverageBanner />
 
       {/* Tier Comparison Table - Feature Matrix */}
       <TierComparisonTable />
