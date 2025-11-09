@@ -1,0 +1,157 @@
+import { ArrowRight, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+const tiers = [{
+  name: "GUARDIAN",
+  price: 349,
+  features: [
+    "Daily violation monitoring",
+    "72-hour violation response time",
+    "Unlimited violation handling",
+    "Custom POA drafting & submission",
+    "Weekly account health reports",
+    "Email support with 48-hour response",
+    "Account health score monitoring",
+    "48-hour communication response time"
+  ]
+}, {
+  name: "DEFENDER",
+  price: 899,
+  inheritFrom: "GUARDIAN",
+  features: [
+    "48-hour violation response (2x faster)",
+    "Annual compliance audit",
+    "Priority violation queue",
+    "24-hour communication response time"
+  ]
+}, {
+  name: "FORTRESS",
+  price: 2199,
+  inheritFrom: "DEFENDER",
+  features: [
+    "24-hour violation response (2x faster)",
+    "6-hour communication response",
+    "Dedicated account manager",
+    "Slack channel + email support",
+    "Twice-yearly compliance audits",
+    "Quarterly strategy calls",
+    "Daily check-ins during active violations",
+    "Executive escalation handling"
+  ]
+}, {
+  name: "EMPIRE",
+  price: 5999,
+  inheritFrom: "FORTRESS",
+  features: [
+    "Same-day violation response",
+    "2-hour communication response",
+    "Senior dedicated account manager",
+    "WhatsApp + Slack + Phone support",
+    "Quarterly compliance audits",
+    "Monthly strategy sessions"
+  ]
+}];
+const TierCard = ({
+  tier
+}: {
+  tier: typeof tiers[0];
+}) => {
+  const scrollToWizard = () => {
+    const wizard = document.getElementById('protection-wizard');
+    wizard?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  
+  return (
+    <div className="relative flex flex-col bg-white rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-8 min-h-[520px]">
+      
+      {/* Tier Name */}
+      <h3 className="text-3xl font-bold text-gray-900 mb-4">
+        {tier.name}
+      </h3>
+
+      {/* Price */}
+      <div className="mb-6">
+        <span className="text-5xl font-extrabold text-blue-600 tabular-nums">
+          ${tier.price.toLocaleString()}
+        </span>
+        <span className="text-xl text-gray-600 ml-2">
+          /month
+        </span>
+      </div>
+
+      {/* Inheritance Callout (if applicable) */}
+      {"inheritFrom" in tier && tier.inheritFrom && (
+        <p className="text-gray-600 mb-6 min-h-[60px] leading-relaxed">
+          Everything in <span className="font-semibold text-blue-600">{tier.inheritFrom}</span>, plus:
+        </p>
+      )}
+      {!("inheritFrom" in tier && tier.inheritFrom) && (
+        <p className="text-gray-600 mb-6 min-h-[60px] leading-relaxed">
+          Essential protection for growing Amazon sellers
+        </p>
+      )}
+
+      {/* Features */}
+      <ul className="space-y-3 mb-8 flex-grow">
+        {tier.features.map((feature, idx) => (
+          <li key={idx} className="flex items-start">
+            <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+            <span className="text-gray-700 leading-relaxed">{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA Button */}
+      <div className="mt-auto">
+        <Button 
+          onClick={scrollToWizard}
+          className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center group shadow-md hover:shadow-lg h-auto"
+        >
+          Find My Protection Tier
+          <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+        </Button>
+        <p className="text-center text-sm text-gray-500 mt-3">
+          Take 2-minute assessment
+        </p>
+      </div>
+    </div>
+  );
+};
+export const TierOverview = () => {
+  const scrollToWizard = () => {
+    const wizard = document.getElementById('protection-wizard');
+    wizard?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  return (
+    <section id="tier-overview" className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Protection Tiers
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            We'll recommend the right tier based on your account complexity and risk profile
+          </p>
+        </div>
+
+        {/* Tier Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch mb-12">
+          {tiers.map(tier => <TierCard key={tier.name} tier={tier} />)}
+        </div>
+
+        {/* Below Cards Clarification */}
+        <div className="text-center">
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Not sure which tier fits your needs? Our assessment tool analyzes your account metrics and violation history to recommend the optimal protection level.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};

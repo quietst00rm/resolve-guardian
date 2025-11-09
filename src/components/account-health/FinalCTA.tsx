@@ -3,11 +3,11 @@ import { Shield, Check, Zap } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 
 export const FinalCTA = () => {
-  const scrollToCalculator = () => {
-    const calculator = document.getElementById('pricing-calculator');
-    calculator?.scrollIntoView({
+  const scrollToWizard = () => {
+    const wizard = document.getElementById('protection-wizard');
+    wizard?.scrollIntoView({
       behavior: 'smooth',
-      block: 'center'
+      block: 'start'
     });
   };
   return <section className="hero-gradient-animated py-24">
@@ -34,8 +34,8 @@ export const FinalCTA = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
-          <Button size="lg" onClick={scrollToCalculator} className="bg-primary hover:bg-blue-600 text-white px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all">
-            Calculate My Tier
+          <Button size="lg" onClick={scrollToWizard} className="bg-primary hover:bg-blue-600 text-white px-12 py-6 text-xl font-bold h-auto shadow-2xl transform hover:scale-105 transition-all">
+            Get Started
           </Button>
           <Button size="lg" variant="outline" className="border-2 border-white hover:bg-white px-12 py-6 text-xl font-semibold h-auto transition-all text-slate-800">
             Talk to an Expert

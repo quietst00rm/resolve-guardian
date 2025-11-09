@@ -37,7 +37,7 @@ export const InteractiveFAQ = () => {
     },
     {
       question: "How quickly will I see my first report?",
-      answer: "Your first weekly report arrives within 7 days of onboarding. You'll get immediate access to your live violation tracking sheet on day 1, and we start monitoring within 24 hours of receiving Seller Central access."
+      answer: "Your first weekly report arrives within 7 days of onboarding, and we start monitoring within 24 hours of receiving Seller Central access. You'll receive email updates whenever we detect or resolve violations."
     }
   ];
 

@@ -7,7 +7,7 @@ export const EnhancedPricingCards = () => {
     name: "Essential Protection",
     price: 599,
     badge: "Best for $50K–$250K/mo revenue",
-    features: ["Daily violation monitoring (24/7 coverage)", "Up to 15 violations resolved per month", "POA drafting + submission on your behalf", "Weekly account health reports", "Email support (24-hour response time)", "Live violation tracking access"],
+    features: ["Daily violation monitoring (24/7 coverage)", "Up to 15 violations resolved per month", "POA drafting + submission on your behalf", "Weekly account health reports", "Email support (24-hour response time)"],
     cta: "Start Essential Protection",
     popular: false
   }, {
