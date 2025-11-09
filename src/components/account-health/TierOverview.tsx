@@ -62,50 +62,62 @@ const TierCard = ({
       block: 'start'
     });
   };
-  return <div className="relative bg-card rounded-2xl p-8 transition-all duration-400 hover:-translate-y-2 flex flex-col border-2 border-border shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:border-primary hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)]">
-
+  
+  return (
+    <div className="relative flex flex-col bg-white rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-8 min-h-[520px]">
+      
       {/* Tier Name */}
-      <h3 className="text-[28px] font-bold text-primary uppercase tracking-[1.5px] text-center mb-3">
+      <h3 className="text-3xl font-bold text-gray-900 mb-4">
         {tier.name}
       </h3>
 
       {/* Price */}
-      <div className="text-center mb-6">
-        <div className="text-5xl font-bold text-foreground leading-none">
+      <div className="mb-6">
+        <span className="text-5xl font-extrabold text-blue-600 tabular-nums">
           ${tier.price.toLocaleString()}
-        </div>
-        <span className="text-xl font-normal text-muted-foreground">/month</span>
+        </span>
+        <span className="text-xl text-gray-600 ml-2">
+          /month
+        </span>
       </div>
-
-      {/* Divider */}
-      <div className="w-20 h-1 bg-gradient-to-r from-primary to-blue-400 mx-auto mb-6 rounded-full"></div>
 
       {/* Inheritance Callout (if applicable) */}
       {"inheritFrom" in tier && tier.inheritFrom && (
-        <div className="mb-4 p-3 bg-primary/5 border-l-4 border-primary rounded">
-          <p className="text-sm font-semibold text-foreground">
-            Everything in <span className="text-primary">{tier.inheritFrom}</span>, plus:
-          </p>
-        </div>
+        <p className="text-gray-600 mb-6 min-h-[60px] leading-relaxed">
+          Everything in <span className="font-semibold text-blue-600">{tier.inheritFrom}</span>, plus:
+        </p>
+      )}
+      {!("inheritFrom" in tier && tier.inheritFrom) && (
+        <p className="text-gray-600 mb-6 min-h-[60px] leading-relaxed">
+          Essential protection for growing Amazon sellers
+        </p>
       )}
 
       {/* Features */}
-      <div className="mb-6">
-        <ul className="space-y-3">
-          {tier.features.map((feature, idx) => <li key={idx} className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-              <span className="text-[14px] font-medium text-foreground leading-relaxed">
-                {feature}
-              </span>
-            </li>)}
-        </ul>
-      </div>
+      <ul className="space-y-3 mb-8 flex-grow">
+        {tier.features.map((feature, idx) => (
+          <li key={idx} className="flex items-start">
+            <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+            <span className="text-gray-700 leading-relaxed">{feature}</span>
+          </li>
+        ))}
+      </ul>
 
       {/* CTA Button */}
-      <Button onClick={scrollToWizard} className="w-full h-[52px] text-base font-semibold rounded-lg transition-all duration-300 mt-auto bg-primary hover:bg-primary/90 text-primary-foreground">
-        Start {tier.name.charAt(0) + tier.name.slice(1).toLowerCase()} Protection
-      </Button>
-    </div>;
+      <div className="mt-auto">
+        <Button 
+          onClick={scrollToWizard}
+          className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center group shadow-md hover:shadow-lg h-auto"
+        >
+          Find My Protection Tier
+          <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+        </Button>
+        <p className="text-center text-sm text-gray-500 mt-3">
+          Take 2-minute assessment
+        </p>
+      </div>
+    </div>
+  );
 };
 export const TierOverview = () => {
   const scrollToWizard = () => {
@@ -115,30 +127,31 @@ export const TierOverview = () => {
       block: 'start'
     });
   };
-  return <section id="tier-overview" className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-6">
+  return (
+    <section id="tier-overview" className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Protection Tiers Designed for Your Business Size
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Protection Tiers
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Four levels of protection. One mission: keeping your Amazon account healthy.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            We'll recommend the right tier based on your account complexity and risk profile
           </p>
         </div>
 
         {/* Tier Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch mb-12">
           {tiers.map(tier => <TierCard key={tier.name} tier={tier} />)}
         </div>
 
-        {/* CTA Button */}
+        {/* Below Cards Clarification */}
         <div className="text-center">
-          <Button size="lg" onClick={scrollToWizard} className="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-6 text-lg font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 h-auto">
-            Find Your Protection Plan
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Not sure which tier fits your needs? Our assessment tool analyzes your account metrics and violation history to recommend the optimal protection level.
+          </p>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };

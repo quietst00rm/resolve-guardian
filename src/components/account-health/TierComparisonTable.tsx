@@ -1,7 +1,5 @@
 import React from "react";
-import { Check, X } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Check, X, ArrowRight } from "lucide-react";
 
 type TierName = "GUARDIAN" | "DEFENDER" | "FORTRESS" | "EMPIRE";
 
@@ -204,132 +202,209 @@ const FeatureCell = ({ included, detail }: { included: boolean; detail?: string 
 
 export const TierComparisonTable = () => {
   const categories = Array.from(new Set(features.map(f => f.category)));
+  const [expandedTier, setExpandedTier] = React.useState<string | null>(null);
+
+  const scrollToWizard = () => {
+    const wizard = document.getElementById('protection-wizard');
+    wizard?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
   return (
     <section className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Compare Protection Tiers
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Feature Comparison
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See exactly what's included at each level and how features progress as your business grows.
+          <p className="text-xl text-gray-600">
+            See exactly what's included in each protection tier
           </p>
         </div>
 
-        {/* Desktop Table */}
-        <div className="hidden lg:block overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-b-2 border-border">
-                <TableHead className="w-[300px] text-left">
-                  <span className="text-base font-bold text-foreground">Features</span>
-                </TableHead>
-                <TableHead className="text-center">
-                  <TierHeader tier="GUARDIAN" price={349} />
-                </TableHead>
-                <TableHead className="text-center">
-                  <TierHeader tier="DEFENDER" price={899} />
-                </TableHead>
-                <TableHead className="text-center">
-                  <TierHeader tier="FORTRESS" price={2199} />
-                </TableHead>
-                <TableHead className="text-center">
-                  <TierHeader tier="EMPIRE" price={5999} />
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {categories.map((category) => {
-                const categoryFeatures = features.filter(f => f.category === category);
-                return (
-                  <React.Fragment key={category}>
-                    {/* Category Header Row */}
-                    <TableRow className="bg-muted/30 hover:bg-muted/30">
-                      <TableCell colSpan={5} className="font-bold text-foreground py-3">
-                        {category}
-                      </TableCell>
-                    </TableRow>
-                    {/* Feature Rows */}
-                    {categoryFeatures.map((feature, idx) => (
-                      <TableRow key={idx} className="hover:bg-muted/20 transition-colors">
-                        <TableCell className="font-medium text-foreground py-4">
-                          {feature.feature}
-                        </TableCell>
-                        <TableCell className="text-center py-4">
-                          <FeatureCell 
-                            included={feature.guardian} 
-                            detail={feature.details?.guardian}
-                          />
-                        </TableCell>
-                        <TableCell className="text-center py-4">
-                          <FeatureCell 
-                            included={feature.defender} 
-                            detail={feature.details?.defender}
-                          />
-                        </TableCell>
-                        <TableCell className="text-center py-4">
-                          <FeatureCell 
-                            included={feature.fortress} 
-                            detail={feature.details?.fortress}
-                          />
-                        </TableCell>
-                        <TableCell className="text-center py-4">
-                          <FeatureCell 
-                            included={feature.empire} 
-                            detail={feature.details?.empire}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </React.Fragment>
-                );
-              })}
-            </TableBody>
-          </Table>
+        {/* Desktop Table - CSS Grid */}
+        <div className="hidden lg:block">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            
+            {/* Header Row */}
+            <div className="grid grid-cols-5 gap-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+              <div className="p-6 font-semibold text-lg">Feature</div>
+              <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
+                <div className="space-y-1">
+                  <div>GUARDIAN</div>
+                  <div className="text-sm font-normal text-blue-100">$349/mo</div>
+                </div>
+              </div>
+              <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
+                <div className="space-y-1">
+                  <div>DEFENDER</div>
+                  <div className="text-sm font-normal text-blue-100">$899/mo</div>
+                </div>
+              </div>
+              <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
+                <div className="space-y-1">
+                  <div>FORTRESS</div>
+                  <div className="text-sm font-normal text-blue-100">$2,199/mo</div>
+                </div>
+              </div>
+              <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
+                <div className="space-y-1">
+                  <div>EMPIRE</div>
+                  <div className="text-sm font-normal text-blue-100">$5,999/mo</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Categories */}
+            {categories.map((category, catIdx) => {
+              const categoryFeatures = features.filter(f => f.category === category);
+              return (
+                <div key={catIdx}>
+                  {/* Category Header */}
+                  <div className="bg-gray-100 px-6 py-3 border-t border-gray-200">
+                    <h3 className="font-bold text-gray-900 text-base uppercase tracking-wide">
+                      {category}
+                    </h3>
+                  </div>
+
+                  {/* Features in Category */}
+                  {categoryFeatures.map((feature, featIdx) => (
+                    <div 
+                      key={featIdx}
+                      className="grid grid-cols-5 gap-0 border-t border-gray-200 hover:bg-blue-50 transition-colors duration-150"
+                    >
+                      {/* Feature Name */}
+                      <div className="p-5 flex items-center">
+                        <span className="text-gray-700 font-medium">{feature.feature}</span>
+                      </div>
+
+                      {/* Guardian Column */}
+                      <div className="p-5 flex items-center justify-center border-l border-gray-200">
+                        <FeatureCell 
+                          included={feature.guardian} 
+                          detail={feature.details?.guardian}
+                        />
+                      </div>
+
+                      {/* Defender Column */}
+                      <div className="p-5 flex items-center justify-center border-l border-gray-200">
+                        <FeatureCell 
+                          included={feature.defender} 
+                          detail={feature.details?.defender}
+                        />
+                      </div>
+
+                      {/* Fortress Column */}
+                      <div className="p-5 flex items-center justify-center border-l border-gray-200">
+                        <FeatureCell 
+                          included={feature.fortress} 
+                          detail={feature.details?.fortress}
+                        />
+                      </div>
+
+                      {/* Empire Column */}
+                      <div className="p-5 flex items-center justify-center border-l border-gray-200">
+                        <FeatureCell 
+                          included={feature.empire} 
+                          detail={feature.details?.empire}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+
+            {/* Footer CTA */}
+            <div className="bg-gray-50 p-8 border-t border-gray-200 text-center">
+              <button 
+                onClick={scrollToWizard}
+                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 inline-flex items-center shadow-md hover:shadow-lg"
+              >
+                Find My Protection Tier
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Mobile Cards */}
-        <div className="lg:hidden space-y-6">
+        {/* Mobile Accordion */}
+        <div className="lg:hidden space-y-4">
           {["GUARDIAN", "DEFENDER", "FORTRESS", "EMPIRE"].map((tierName) => {
             const tier = tierName as TierName;
             const prices = { GUARDIAN: 349, DEFENDER: 899, FORTRESS: 2199, EMPIRE: 5999 };
+            const isExpanded = expandedTier === tier;
             
             return (
-              <div key={tier} className="bg-card rounded-xl p-6 border-2 border-border">
-                <TierHeader tier={tier} price={prices[tier]} />
-                <div className="mt-6 space-y-4">
-                  {categories.map((category) => {
-                    const categoryFeatures = features.filter(f => f.category === category);
-                    return (
-                      <div key={category}>
-                        <h4 className="font-bold text-foreground mb-2 text-sm">{category}</h4>
-                        <ul className="space-y-2">
-                          {categoryFeatures.map((feature, idx) => {
-                            const tierKey = tier.toLowerCase() as "guardian" | "defender" | "fortress" | "empire";
-                            const included = feature[tierKey];
-                            const detail = feature.details?.[tierKey];
-                            
-                            return (
-                              <li key={idx} className="flex items-start gap-2 text-sm">
-                                {included ? (
-                                  <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                ) : (
-                                  <X className="w-4 h-4 text-muted-foreground/40 flex-shrink-0 mt-0.5" />
-                                )}
-                                <span className={included ? 'text-foreground' : 'text-muted-foreground/60'}>
-                                  {feature.feature}
-                                  {detail && <span className="font-medium text-foreground"> ({detail})</span>}
-                                </span>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    );
-                  })}
-                </div>
+              <div key={tier} className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                
+                {/* Tier Header (Always Visible) */}
+                <button
+                  onClick={() => setExpandedTier(isExpanded ? null : tier)}
+                  className="w-full p-6 flex items-center justify-between bg-gradient-to-r from-blue-600 to-blue-700 text-white"
+                >
+                  <div className="text-left">
+                    <h3 className="text-2xl font-bold">{tier}</h3>
+                    <p className="text-blue-100 mt-1">
+                      ${prices[tier].toLocaleString()}/month
+                    </p>
+                  </div>
+                  <ArrowRight 
+                    className={`h-6 w-6 transition-transform duration-300 ${
+                      isExpanded ? 'rotate-90' : ''
+                    }`}
+                  />
+                </button>
+
+                {/* Expandable Feature List */}
+                {isExpanded && (
+                  <div className="p-6 space-y-4">
+                    {categories.map((category, catIdx) => {
+                      const categoryFeatures = features.filter(f => f.category === category);
+                      return (
+                        <div key={catIdx}>
+                          <h4 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">
+                            {category}
+                          </h4>
+                          <ul className="space-y-2">
+                            {categoryFeatures.map((feature, featIdx) => {
+                              const tierKey = tier.toLowerCase() as "guardian" | "defender" | "fortress" | "empire";
+                              const included = feature[tierKey];
+                              const detail = feature.details?.[tierKey];
+                              
+                              return (
+                                <li key={featIdx} className="flex items-start">
+                                  {included ? (
+                                    <Check className="h-5 w-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                                  ) : (
+                                    <X className="h-5 w-5 text-gray-300 mr-3 mt-0.5 flex-shrink-0" />
+                                  )}
+                                  <div>
+                                    <span className="text-gray-700">{feature.feature}</span>
+                                    {detail && (
+                                      <span className="text-gray-500 text-sm ml-2">({detail})</span>
+                                    )}
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                    
+                    {/* CTA in each accordion */}
+                    <button 
+                      onClick={scrollToWizard}
+                      className="w-full mt-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                    >
+                      Find My Protection Tier
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
