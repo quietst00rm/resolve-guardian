@@ -259,7 +259,7 @@ export const ProtectionWizard = () => {
     if (currentStep === 5 && !answers.sellerType) return;
     if (currentStep === 6 && !answers.brandRegistry) return;
     if (currentStep === 7 && !answers.fulfillment) return;
-    if (currentStep === 8) {
+    if (currentStep === 11) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(answers.email)) {
         toast({
@@ -371,10 +371,10 @@ export const ProtectionWizard = () => {
       case 5: return !!answers.sellerType;
       case 6: return !!answers.brandRegistry;
       case 7: return !!answers.fulfillment;
-      case 8: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
-      case 9: return !!answers.accountAge;
-      case 10: return !!answers.ipComplaints;
-      case 11: return answers.violationTypes.length > 0;
+      case 8: return !!answers.accountAge;
+      case 9: return !!answers.ipComplaints;
+      case 10: return answers.violationTypes.length > 0;
+      case 11: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
       case 12: return true;
       default: return false;
     }
@@ -579,21 +579,6 @@ export const ProtectionWizard = () => {
             {currentStep === 8 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  What's your business email?
-                </label>
-                <input
-                  type="email"
-                  value={answers.email}
-                  onChange={(e) => setAnswers({...answers, email: e.target.value})}
-                  placeholder="you@yourbusiness.com"
-                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
-                />
-              </div>
-            )}
-
-            {currentStep === 9 && (
-              <div className="animate-fade-in">
-                <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How long has your Amazon seller account been active?
                 </label>
                 <select
@@ -611,7 +596,7 @@ export const ProtectionWizard = () => {
               </div>
             )}
 
-            {currentStep === 10 && (
+            {currentStep === 9 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How many Intellectual Property complaints have you received in the past 6 months?
@@ -631,7 +616,7 @@ export const ProtectionWizard = () => {
               </div>
             )}
 
-            {currentStep === 11 && (
+            {currentStep === 10 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   Which types of violations or warnings have you received in the past 6 months?
@@ -682,6 +667,21 @@ export const ProtectionWizard = () => {
                     </label>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {currentStep === 11 && (
+              <div className="animate-fade-in">
+                <label className="text-2xl font-semibold text-foreground mb-6 block">
+                  What's your business email?
+                </label>
+                <input
+                  type="email"
+                  value={answers.email}
+                  onChange={(e) => setAnswers({...answers, email: e.target.value})}
+                  placeholder="you@yourbusiness.com"
+                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                />
               </div>
             )}
 
