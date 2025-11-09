@@ -39,7 +39,7 @@ const AccountHealthMonitoring = () => {
       <ProtectionWizard />
 
       {/* Comparison Table */}
-      <ComparisonTable />
+      
 
       {/* Bento Grid Key Features */}
       
