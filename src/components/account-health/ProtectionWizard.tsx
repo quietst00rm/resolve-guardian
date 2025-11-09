@@ -212,14 +212,12 @@ export const ProtectionWizard = () => {
     }
   }, []);
 
-  // Save to localStorage when answers change (but not confirmation screen)
+  // Save to localStorage when answers change
   useEffect(() => {
-    if (currentStep !== 12) {
-      localStorage.setItem("protectionWizardData", JSON.stringify({
-        answers,
-        currentStep
-      }));
-    }
+    localStorage.setItem("protectionWizardData", JSON.stringify({
+      answers,
+      currentStep
+    }));
   }, [answers, currentStep]);
 
   const calculateTier = (monthlyRevenue: number): string => {
@@ -307,35 +305,12 @@ export const ProtectionWizard = () => {
     return basePlanPrice + addOnsTotal;
   };
 
-  const handleReset = () => {
-    setCurrentStep(1);
-    setAnswers({
-      asins: "",
-      suspendedBefore: "",
-      violations: "",
-      revenue: "",
-      sellerType: "",
-      brandRegistry: "",
-      fulfillment: "",
-      email: "",
-      phone: ""
-    });
-    setAssignedTier("");
-    setSelectedAddOns([]);
-    localStorage.removeItem("protectionWizardData");
-    
-    // Smooth scroll to top of wizard
-    document.getElementById("protection-wizard")?.scrollIntoView({ 
-      behavior: "smooth", 
-      block: "start" 
-    });
-  };
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
     
     // Simulate email sending
     setTimeout(() => {
+      localStorage.removeItem("protectionWizardData");
       setIsSubmitting(false);
       setCurrentStep(12);
       
@@ -369,16 +344,16 @@ export const ProtectionWizard = () => {
   };
 
   return (
-    <section id="protection-wizard" className="bg-muted/30 py-20">
+    <section id="protection-wizard" className="bg-background py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
         {currentStep <= 9 && (
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
               Find Your Protection Plan
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Answer a few questions to receive your personalized tier recommendation and pricing.
+              Answer a few questions about your Amazon business to receive your personalized protection recommendation.
             </p>
           </div>
         )}
@@ -801,11 +776,11 @@ export const ProtectionWizard = () => {
                 </div>
 
                 <Button
-                  onClick={handleReset}
-                  variant="default"
+                  onClick={() => window.location.href = "/"}
+                  variant="outline"
                   size="lg"
                 >
-                  Start New Assessment
+                  Return to Homepage
                 </Button>
               </div>
             )}

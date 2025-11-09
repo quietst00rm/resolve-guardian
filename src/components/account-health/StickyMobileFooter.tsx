@@ -28,9 +28,9 @@ export const StickyMobileFooter = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (
@@ -46,10 +46,10 @@ export const StickyMobileFooter = () => {
           <div className="text-xs text-muted-foreground">Protect your account now</div>
         </div>
         <Button 
-          onClick={scrollToWizard}
+          onClick={scrollToCalculator}
           className="bg-primary hover:bg-blue-600 text-white px-6 py-2 h-auto font-semibold"
         >
-          Find Your Plan
+          Calculate Tier
         </Button>
       </div>
     </div>

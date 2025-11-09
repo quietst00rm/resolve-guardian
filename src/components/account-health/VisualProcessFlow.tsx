@@ -2,27 +2,15 @@ import { useState } from "react";
 import { Monitor, FileText, Upload, ChevronDown } from "lucide-react";
 
 export const VisualProcessFlow = () => {
-  const [expandedSteps, setExpandedSteps] = useState<Set<number>>(new Set());
-
-  const toggleStep = (index: number) => {
-    setExpandedSteps(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
-  };
+  const [expandedStep, setExpandedStep] = useState<number | null>(null);
 
   const steps = [
     {
       number: "01",
       icon: Monitor,
       title: "We Check Daily",
-      description: "Log into your Seller Central daily. Identify violations within 24 hours.",
-      expandedContent: "Our team logs into your Seller Central account daily to conduct thorough manual reviews of your account health, performance metrics, notifications, and listings. We identify potential violations and issues within 24 hours, giving you the fastest possible response time to protect your account."
+      description: "Log into your Seller Central through Amazon's Preferred Vendor Network. Identify violations within 24 hours.",
+      expandedContent: "We access your account through Amazon's official Preferred Vendor Network, ensuring complete security and compliance. Our automated system runs comprehensive checks across all your listings, performance metrics, and notifications daily."
     },
     {
       number: "02",
@@ -70,13 +58,13 @@ export const VisualProcessFlow = () => {
 
           {steps.map((step, index) => {
             const Icon = step.icon;
-            const isExpanded = expandedSteps.has(index);
+            const isExpanded = expandedStep === index;
             
             return (
               <div key={index} className="relative">
                 {/* Step Circle */}
                 <div className="flex flex-col items-center mb-6">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl relative z-10 transition-transform duration-300 hover:scale-105">
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl relative z-10">
                     {step.number}
                   </div>
                 </div>
@@ -84,7 +72,7 @@ export const VisualProcessFlow = () => {
                 {/* Content */}
                 <div className="text-center space-y-4">
                   <div className="flex justify-center">
-                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center transition-all duration-300 hover:bg-primary/20">
+                    <div className="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
                       <Icon className="h-8 w-8 text-primary" />
                     </div>
                   </div>
@@ -99,20 +87,17 @@ export const VisualProcessFlow = () => {
 
                   {/* Expandable Section */}
                   <button
-                    onClick={() => toggleStep(index)}
-                    className="group relative inline-flex items-center gap-2 px-4 py-2 mt-4 rounded-lg bg-primary/5 hover:bg-primary/10 text-primary font-medium transition-all duration-300 hover:shadow-md"
+                    onClick={() => setExpandedStep(isExpanded ? null : index)}
+                    className="text-primary hover:underline font-medium inline-flex items-center gap-2 mt-4 transition-all"
                   >
-                    <span>Learn More</span>
-                    <ChevronDown className={`h-4 w-4 transition-all duration-300 ${isExpanded ? 'rotate-180' : ''} group-hover:translate-y-0.5`} />
+                    Learn More
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
                   </button>
 
                   {/* Expanded Content */}
-                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-96 opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
-                    <div className="relative bg-gradient-to-br from-primary/5 to-blue-500/5 border border-primary/20 p-6 rounded-xl text-left shadow-lg">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-blue-600 rounded-l-xl"></div>
-                      <p className="text-sm text-foreground/80 leading-relaxed pl-3">
-                        {step.expandedContent}
-                      </p>
+                  <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                    <div className="bg-background p-4 rounded-lg text-left text-sm text-muted-foreground leading-relaxed">
+                      {step.expandedContent}
                     </div>
                   </div>
                 </div>
