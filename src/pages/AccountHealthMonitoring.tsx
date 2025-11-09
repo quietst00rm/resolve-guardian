@@ -18,10 +18,10 @@ const AccountHealthMonitoring = () => {
       
 
       {/* Hero Section with Animated Gradient */}
-      <AnimatedGradientHero />
+      
 
       {/* Problem → Solution Section */}
-      <ProblemSolutionSection />
+      
 
       {/* Visual Process Flow - How It Works */}
       <VisualProcessFlow />
@@ -51,7 +51,7 @@ const AccountHealthMonitoring = () => {
       <PersonaTabs />
 
       {/* Interactive FAQ */}
-      <InteractiveFAQ />
+      
 
       {/* Testimonials */}
 
