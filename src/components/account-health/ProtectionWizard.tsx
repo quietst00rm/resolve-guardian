@@ -210,7 +210,13 @@ export const ProtectionWizard = () => {
     if (saved) {
       try {
         const data = JSON.parse(saved);
-        setAnswers(data.answers || answers);
+        // Ensure violationTypes is always an array
+        const loadedAnswers = {
+          ...answers,
+          ...data.answers,
+          violationTypes: Array.isArray(data.answers?.violationTypes) ? data.answers.violationTypes : []
+        };
+        setAnswers(loadedAnswers);
         setCurrentStep(data.currentStep || 1);
       } catch (e) {
         console.error("Failed to load saved data");
@@ -373,7 +379,7 @@ export const ProtectionWizard = () => {
       case 7: return !!answers.fulfillment;
       case 8: return !!answers.accountAge;
       case 9: return !!answers.ipComplaints;
-      case 10: return answers.violationTypes.length > 0;
+      case 10: return (answers.violationTypes || []).length > 0;
       case 11: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
       case 12: return true;
       default: return false;
@@ -644,8 +650,9 @@ export const ProtectionWizard = () => {
                     >
                       <input
                         type="checkbox"
-                        checked={answers.violationTypes.includes(violation)}
+                        checked={(answers.violationTypes || []).includes(violation)}
                         onChange={(e) => {
+                          const currentTypes = answers.violationTypes || [];
                           if (violation === "I have not received any violations or warnings") {
                             // If "none" is selected, clear all others
                             setAnswers({
@@ -655,8 +662,8 @@ export const ProtectionWizard = () => {
                           } else {
                             // If any other is selected, remove "none" if present
                             const newTypes = e.target.checked
-                              ? [...answers.violationTypes.filter(v => v !== "I have not received any violations or warnings"), violation]
-                              : answers.violationTypes.filter(v => v !== violation);
+                              ? [...currentTypes.filter(v => v !== "I have not received any violations or warnings"), violation]
+                              : currentTypes.filter(v => v !== violation);
                             setAnswers({...answers, violationTypes: newTypes});
                           }
                         }}
