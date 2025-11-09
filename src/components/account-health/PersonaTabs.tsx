@@ -214,30 +214,8 @@ export const PersonaTabs = () => {
               </div>
             </div>
 
-            {/* Right Column - Visuals */}
+            {/* Right Column - Testimonial Only */}
             <div className="space-y-6 lg:space-y-8">
-              {/* Enhanced Illustration Area */}
-              <div 
-                className="aspect-square rounded-2xl relative overflow-hidden"
-                style={{ 
-                  background: `linear-gradient(135deg, ${activePersona.theme.light} 0%, ${activePersona.theme.light}00 100%)`
-                }}
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="grid grid-cols-3 gap-4 p-8 opacity-20">
-                    {[...Array(9)].map((_, i) => (
-                      <div 
-                        key={i}
-                        className="w-16 h-16 rounded-lg flex items-center justify-center"
-                        style={{ backgroundColor: activePersona.theme.primary }}
-                      >
-                        <Icon className="h-8 w-8 text-white" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
               {/* Enhanced Testimonial Quote */}
               <div 
                 className="bg-background p-8 rounded-xl shadow-xl relative transition-all duration-200 hover:shadow-2xl border-t-4"
