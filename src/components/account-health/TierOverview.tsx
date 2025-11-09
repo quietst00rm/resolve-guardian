@@ -204,7 +204,14 @@ export const TierOverview = () => {
         {/* Below Cards Clarification */}
         <div className="text-center">
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Not sure which tier fits your needs? Our assessment tool analyzes your account metrics and violation history to recommend the optimal protection level.
+            Not sure which tier fits your needs?{' '}
+            <button 
+              onClick={scrollToWizard}
+              className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors"
+            >
+              Our assessment tool
+            </button>
+            {' '}analyzes your account metrics and violation history to recommend the optimal protection level.
           </p>
         </div>
       </div>
