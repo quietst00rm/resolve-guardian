@@ -38,30 +38,6 @@ const features: ComparisonFeature[] = [
     fortress: true,
     empire: true,
   },
-  {
-    category: "Monitoring & Detection",
-    feature: "Performance Scorecard Monitoring",
-    guardian: true,
-    defender: true,
-    fortress: true,
-    empire: true,
-  },
-  {
-    category: "Monitoring & Detection",
-    feature: "Proactive Notification Tracking",
-    guardian: true,
-    defender: true,
-    fortress: true,
-    empire: true,
-  },
-  {
-    category: "Monitoring & Detection",
-    feature: "Proactive Risk Alerts",
-    guardian: false,
-    defender: true,
-    fortress: true,
-    empire: true,
-  },
 
   // Response Times
   {
@@ -120,14 +96,6 @@ const features: ComparisonFeature[] = [
   },
   {
     category: "Violation Handling",
-    feature: "Q4/Prime Day Priority Handling",
-    guardian: false,
-    defender: true,
-    fortress: true,
-    empire: true,
-  },
-  {
-    category: "Violation Handling",
     feature: "Daily Check-ins During Active Violations",
     guardian: false,
     defender: false,
@@ -139,7 +107,7 @@ const features: ComparisonFeature[] = [
     feature: "Executive Escalation Handling",
     guardian: false,
     defender: false,
-    fortress: false,
+    fortress: true,
     empire: true,
   },
 
@@ -155,15 +123,14 @@ const features: ComparisonFeature[] = [
   {
     category: "Reporting & Audits",
     feature: "Compliance Audits",
-    guardian: true,
+    guardian: false,
     defender: true,
     fortress: true,
     empire: true,
     details: {
-      guardian: "Annual",
-      defender: "Twice yearly",
-      fortress: "Quarterly",
-      empire: "Monthly",
+      defender: "Annual",
+      fortress: "Twice yearly",
+      empire: "Quarterly",
     },
   },
 
@@ -206,24 +173,11 @@ const features: ComparisonFeature[] = [
       empire: "Monthly",
     },
   },
-  {
-    category: "Support & Account Management",
-    feature: "Dedicated Seller Central Account Access",
-    guardian: false,
-    defender: false,
-    fortress: false,
-    empire: true,
-  },
 ];
 
-const TierHeader = ({ tier, price, popular }: { tier: TierName; price: number; popular?: boolean }) => (
+const TierHeader = ({ tier, price }: { tier: TierName; price: number }) => (
   <div className="text-center space-y-2">
-    <div className="space-y-1">
-      <h3 className="text-lg font-bold text-foreground">{tier}</h3>
-      {popular && (
-        <Badge className="bg-primary text-primary-foreground text-xs">Most Popular</Badge>
-      )}
-    </div>
+    <h3 className="text-lg font-bold text-foreground">{tier}</h3>
     <div className="text-2xl font-bold text-foreground">${price.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">/mo</span></div>
   </div>
 );
@@ -275,8 +229,8 @@ export const TierComparisonTable = () => {
                 <TableHead className="text-center">
                   <TierHeader tier="GUARDIAN" price={349} />
                 </TableHead>
-                <TableHead className="text-center bg-primary/5">
-                  <TierHeader tier="DEFENDER" price={899} popular />
+                <TableHead className="text-center">
+                  <TierHeader tier="DEFENDER" price={899} />
                 </TableHead>
                 <TableHead className="text-center">
                   <TierHeader tier="FORTRESS" price={2199} />
@@ -309,7 +263,7 @@ export const TierComparisonTable = () => {
                             detail={feature.details?.guardian}
                           />
                         </TableCell>
-                        <TableCell className="text-center py-4 bg-primary/5">
+                        <TableCell className="text-center py-4">
                           <FeatureCell 
                             included={feature.defender} 
                             detail={feature.details?.defender}
@@ -341,11 +295,10 @@ export const TierComparisonTable = () => {
           {["GUARDIAN", "DEFENDER", "FORTRESS", "EMPIRE"].map((tierName) => {
             const tier = tierName as TierName;
             const prices = { GUARDIAN: 349, DEFENDER: 899, FORTRESS: 2199, EMPIRE: 5999 };
-            const popular = tier === "DEFENDER";
             
             return (
-              <div key={tier} className={`bg-card rounded-xl p-6 border-2 ${popular ? 'border-primary shadow-lg' : 'border-border'}`}>
-                <TierHeader tier={tier} price={prices[tier]} popular={popular} />
+              <div key={tier} className="bg-card rounded-xl p-6 border-2 border-border">
+                <TierHeader tier={tier} price={prices[tier]} />
                 <div className="mt-6 space-y-4">
                   {categories.map((category) => {
                     const categoryFeatures = features.filter(f => f.category === category);

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 const tiers = [{
   name: "GUARDIAN",
   price: 349,
-  popular: false,
   features: [
     "Daily violation monitoring",
     "72-hour violation response time",
@@ -12,52 +11,43 @@ const tiers = [{
     "Weekly account health reports",
     "Email support with 48-hour response",
     "Account health score monitoring",
-    "48-hour communication response time",
-    "Annual compliance audit",
-    "Proactive notification tracking",
-    "Performance scorecard monitoring"
+    "48-hour communication response time"
   ]
 }, {
   name: "DEFENDER",
   price: 899,
-  popular: true,
   inheritFrom: "GUARDIAN",
   features: [
     "48-hour violation response (2x faster)",
-    "Twice-yearly compliance audits",
+    "Annual compliance audit",
     "Priority violation queue",
-    "24-hour communication response time",
-    "Proactive risk alerts",
-    "Q4/Prime Day priority handling"
+    "24-hour communication response time"
   ]
 }, {
   name: "FORTRESS",
   price: 2199,
-  popular: false,
   inheritFrom: "DEFENDER",
   features: [
     "24-hour violation response (2x faster)",
     "6-hour communication response",
     "Dedicated account manager",
     "Slack channel + email support",
-    "Quarterly compliance audits",
+    "Twice-yearly compliance audits",
     "Quarterly strategy calls",
-    "Daily check-ins during active violations"
+    "Daily check-ins during active violations",
+    "Executive escalation handling"
   ]
 }, {
   name: "EMPIRE",
   price: 5999,
-  popular: false,
   inheritFrom: "FORTRESS",
   features: [
     "Same-day violation response",
     "2-hour communication response",
     "Senior dedicated account manager",
     "WhatsApp + Slack + Phone support",
-    "Monthly compliance audits",
-    "Monthly strategy sessions",
-    "Executive escalation handling",
-    "Dedicated Seller Central account access"
+    "Quarterly compliance audits",
+    "Monthly strategy sessions"
   ]
 }];
 const TierCard = ({
@@ -72,11 +62,7 @@ const TierCard = ({
       block: 'start'
     });
   };
-  return <div className={`relative bg-card rounded-2xl p-8 transition-all duration-400 hover:-translate-y-2 flex flex-col ${tier.popular ? 'border-[3px] border-primary shadow-[0_12px_48px_rgba(37,99,235,0.12)] lg:scale-105 z-10' : 'border-2 border-border shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:border-primary hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)]'}`}>
-      {/* Most Popular Badge */}
-      {tier.popular && <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
-          MOST POPULAR
-        </div>}
+  return <div className="relative bg-card rounded-2xl p-8 transition-all duration-400 hover:-translate-y-2 flex flex-col border-2 border-border shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:border-primary hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)]">
 
       {/* Tier Name */}
       <h3 className="text-[28px] font-bold text-primary uppercase tracking-[1.5px] text-center mb-3">
@@ -116,7 +102,7 @@ const TierCard = ({
       </div>
 
       {/* CTA Button */}
-      <Button onClick={scrollToWizard} className={`w-full h-[52px] text-base font-semibold rounded-lg transition-all duration-300 mt-auto ${tier.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_8px_24px_rgba(37,99,235,0.3)]' : 'bg-slate-600 hover:bg-slate-700 text-white'}`}>
+      <Button onClick={scrollToWizard} className="w-full h-[52px] text-base font-semibold rounded-lg transition-all duration-300 mt-auto bg-primary hover:bg-primary/90 text-primary-foreground">
         Start {tier.name.charAt(0) + tier.name.slice(1).toLowerCase()} Protection
       </Button>
     </div>;
