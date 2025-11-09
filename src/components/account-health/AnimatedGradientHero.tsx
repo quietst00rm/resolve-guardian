@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { FloatingDashboard } from "./FloatingDashboard";
 import { Logo } from "@/components/ui/logo";
 
 export const AnimatedGradientHero = () => {
@@ -17,9 +16,9 @@ export const AnimatedGradientHero = () => {
       }}></div>
 
       <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
-        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-16 items-center">
-          {/* Left Column */}
-          <div className="space-y-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Content */}
+          <div className="space-y-8 text-center">
             {/* Logo */}
             <div className="animate-fade-in">
               <Logo variant="white" size="md" />
@@ -43,7 +42,7 @@ export const AnimatedGradientHero = () => {
             </p>
 
             {/* CTA Container */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Button 
                 size="lg"
                 onClick={scrollToWizard}
@@ -62,7 +61,7 @@ export const AnimatedGradientHero = () => {
             </div>
 
             {/* Trust Bar */}
-            <div className="flex flex-wrap gap-6 items-center pt-6 text-sm text-gray-400">
+            <div className="flex flex-wrap gap-6 items-center justify-center pt-6 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <span className="text-yellow-400 text-base">★★★★★</span>
                 <span>4.9/5 from 30+ sellers</span>
@@ -72,11 +71,6 @@ export const AnimatedGradientHero = () => {
               <div className="hidden sm:block h-4 w-px bg-gray-700"></div>
               <span>American-based team</span>
             </div>
-          </div>
-
-          {/* Right Column - Floating Dashboard */}
-          <div className="relative">
-            <FloatingDashboard />
           </div>
         </div>
       </div>
