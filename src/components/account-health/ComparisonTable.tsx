@@ -56,11 +56,11 @@ export const ComparisonTable = () => {
     }
   };
 
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   };
 
@@ -124,7 +124,7 @@ export const ComparisonTable = () => {
             {/* Footer CTA */}
             <div className="bg-gray-50 p-8 border-t border-gray-200 text-center">
               <button 
-                onClick={scrollToWizard}
+                onClick={scrollToCalculator}
                 className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 inline-flex items-center shadow-md hover:shadow-lg"
               >
                 Find My Protection Tier

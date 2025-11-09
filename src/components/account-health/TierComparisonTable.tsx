@@ -204,11 +204,11 @@ export const TierComparisonTable = () => {
   const categories = Array.from(new Set(features.map(f => f.category)));
   const [expandedTier, setExpandedTier] = React.useState<string | null>(null);
 
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   };
 
@@ -321,7 +321,7 @@ export const TierComparisonTable = () => {
             {/* Footer CTA */}
             <div className="bg-gray-50 p-8 border-t border-gray-200 text-center">
               <button 
-                onClick={scrollToWizard}
+                onClick={scrollToCalculator}
                 className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 inline-flex items-center shadow-md hover:shadow-lg"
               >
                 Find My Protection Tier
@@ -398,7 +398,7 @@ export const TierComparisonTable = () => {
                     
                     {/* CTA in each accordion */}
                     <button 
-                      onClick={scrollToWizard}
+                      onClick={scrollToCalculator}
                       className="w-full mt-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
                     >
                       Find My Protection Tier

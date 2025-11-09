@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 export const AnimatedGradientHero = () => {
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   };
   return <section className="relative min-h-screen flex items-center justify-center hero-gradient-animated overflow-hidden">
@@ -41,7 +41,7 @@ export const AnimatedGradientHero = () => {
 
             {/* CTA Container */}
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-              <Button size="lg" onClick={scrollToWizard} className="bg-primary hover:bg-blue-600 text-white px-8 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 h-auto">
+              <Button size="lg" onClick={scrollToCalculator} className="bg-primary hover:bg-blue-600 text-white px-8 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 h-auto">
                 Find Your Protection Plan
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

@@ -58,11 +58,11 @@ const TierCard = ({
 }) => {
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   };
 
@@ -123,7 +123,7 @@ const TierCard = ({
       {/* CTA Button */}
       <div className="mt-auto">
         <Button 
-          onClick={scrollToWizard}
+          onClick={scrollToCalculator}
           className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center group shadow-md hover:shadow-lg h-auto"
         >
           Find My Protection Tier
@@ -137,11 +137,11 @@ const TierCard = ({
   );
 };
 export const TierOverview = () => {
-  const scrollToWizard = () => {
-    const wizard = document.getElementById('protection-wizard');
-    wizard?.scrollIntoView({
+  const scrollToCalculator = () => {
+    const calculator = document.getElementById('pricing-calculator');
+    calculator?.scrollIntoView({
       behavior: 'smooth',
-      block: 'start'
+      block: 'center'
     });
   };
   return (
@@ -206,7 +206,7 @@ export const TierOverview = () => {
           <p className="text-gray-600 max-w-2xl mx-auto">
             Not sure which tier fits your needs?{' '}
             <button 
-              onClick={scrollToWizard}
+              onClick={scrollToCalculator}
               className="text-blue-600 hover:text-blue-700 underline font-medium transition-colors"
             >
               Our assessment tool
