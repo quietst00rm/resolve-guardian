@@ -220,9 +220,15 @@ export const TierComparisonTable = () => {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Feature Comparison
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-600 mb-4">
             See exactly what's included in each protection tier
           </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Your tier is determined by our 12-factor risk assessment. Higher risk accounts receive more intensive monitoring and support to prevent suspensions.</span>
+          </div>
         </div>
 
         {/* Desktop Table - CSS Grid */}
@@ -235,24 +241,28 @@ export const TierComparisonTable = () => {
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>GUARDIAN</div>
+                  <div className="text-xs font-normal text-blue-100">(Low Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$349/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>DEFENDER</div>
+                  <div className="text-xs font-normal text-blue-100">(Moderate Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$899/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>FORTRESS</div>
+                  <div className="text-xs font-normal text-blue-100">(Elevated Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$2,199/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>EMPIRE</div>
+                  <div className="text-xs font-normal text-blue-100">(High Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$5,999/mo</div>
                 </div>
               </div>
@@ -408,6 +418,22 @@ export const TierComparisonTable = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Transparent Tier Assignment Section */}
+        <div className="mt-16 max-w-4xl mx-auto bg-gray-50 border border-gray-300 rounded-xl p-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">
+            Transparent Tier Assignment
+          </h3>
+          <p className="text-sm text-gray-700 leading-relaxed mb-4">
+            Unlike other services that let you choose inadequate coverage, we ensure you get exactly the protection level your account needs. Our assessment considers account age, violation history, IP complaints, business model, and 8 other critical factors. This prevents under-protection that could cost you your account, while avoiding over-payment for unnecessary services.
+          </p>
+          <button
+            onClick={scrollToCalculator}
+            className="text-blue-600 hover:text-blue-700 underline font-medium text-sm transition-colors"
+          >
+            Take the assessment to see your tier →
+          </button>
         </div>
       </div>
     </section>

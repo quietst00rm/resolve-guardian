@@ -12,6 +12,9 @@ interface FormAnswers {
   brandRegistry: string;
   fulfillment: string;
   email: string;
+  accountAge: string;
+  ipComplaints: string;
+  violationTypes: string[];
   phone: string;
 }
 
@@ -192,6 +195,9 @@ export const ProtectionWizard = () => {
     brandRegistry: "",
     fulfillment: "",
     email: "",
+    accountAge: "",
+    ipComplaints: "",
+    violationTypes: [],
     phone: ""
   });
   const [assignedTier, setAssignedTier] = useState<string>("");
@@ -214,7 +220,7 @@ export const ProtectionWizard = () => {
 
   // Save to localStorage when answers change (but not confirmation screen)
   useEffect(() => {
-    if (currentStep !== 12) {
+    if (currentStep !== 15) {
       localStorage.setItem("protectionWizardData", JSON.stringify({
         answers,
         currentStep
@@ -265,7 +271,7 @@ export const ProtectionWizard = () => {
       }
     }
 
-    if (currentStep === 9) {
+    if (currentStep === 12) {
       // Calculate tier
       const revenue = parseRevenue(answers.revenue);
       const tier = calculateTier(revenue);
@@ -318,6 +324,9 @@ export const ProtectionWizard = () => {
       brandRegistry: "",
       fulfillment: "",
       email: "",
+      accountAge: "",
+      ipComplaints: "",
+      violationTypes: [],
       phone: ""
     });
     setAssignedTier("");
@@ -337,7 +346,7 @@ export const ProtectionWizard = () => {
     // Simulate email sending
     setTimeout(() => {
       setIsSubmitting(false);
-      setCurrentStep(12);
+      setCurrentStep(15);
       
       toast({
         title: "Submission successful!",
@@ -351,7 +360,7 @@ export const ProtectionWizard = () => {
     handleSubmit();
   };
 
-  const progressPercentage = (currentStep / 9) * 100;
+  const progressPercentage = (currentStep / 12) * 100;
 
   const isStepValid = () => {
     switch (currentStep) {
@@ -363,7 +372,10 @@ export const ProtectionWizard = () => {
       case 6: return !!answers.brandRegistry;
       case 7: return !!answers.fulfillment;
       case 8: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
-      case 9: return true;
+      case 9: return !!answers.accountAge;
+      case 10: return !!answers.ipComplaints;
+      case 11: return answers.violationTypes.length > 0;
+      case 12: return true;
       default: return false;
     }
   };
@@ -372,7 +384,7 @@ export const ProtectionWizard = () => {
     <section id="protection-wizard" className="bg-muted/30 py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        {currentStep <= 9 && (
+        {currentStep <= 12 && (
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Find Your Protection Plan
@@ -388,10 +400,10 @@ export const ProtectionWizard = () => {
           <div className="bg-card rounded-2xl shadow-2xl p-12 border border-border min-h-[500px]">
             
             {/* Progress Bar */}
-            {currentStep <= 9 && (
+            {currentStep <= 12 && (
               <div className="mb-8">
                 <div className="text-center text-sm font-semibold text-muted-foreground mb-3">
-                  Step {currentStep} of 9
+                  Question {currentStep} of 12
                 </div>
                 <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                   <div 
@@ -582,6 +594,100 @@ export const ProtectionWizard = () => {
             {currentStep === 9 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
+                  How long has your Amazon seller account been active?
+                </label>
+                <select
+                  value={answers.accountAge}
+                  onChange={(e) => setAnswers({...answers, accountAge: e.target.value})}
+                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                >
+                  <option value="">Select account age...</option>
+                  <option value="<6months">Less than 6 months</option>
+                  <option value="6-12months">6-12 months</option>
+                  <option value="1-2years">1-2 years</option>
+                  <option value="2-5years">2-5 years</option>
+                  <option value="5+years">5+ years</option>
+                </select>
+              </div>
+            )}
+
+            {currentStep === 10 && (
+              <div className="animate-fade-in">
+                <label className="text-2xl font-semibold text-foreground mb-6 block">
+                  How many Intellectual Property complaints have you received in the past 6 months?
+                </label>
+                <select
+                  value={answers.ipComplaints}
+                  onChange={(e) => setAnswers({...answers, ipComplaints: e.target.value})}
+                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                >
+                  <option value="">Select...</option>
+                  <option value="none">None</option>
+                  <option value="1-2">1-2 complaints</option>
+                  <option value="3-5">3-5 complaints</option>
+                  <option value="6-10">6-10 complaints</option>
+                  <option value="10+">10+ complaints</option>
+                </select>
+              </div>
+            )}
+
+            {currentStep === 11 && (
+              <div className="animate-fade-in">
+                <label className="text-2xl font-semibold text-foreground mb-6 block">
+                  Which types of violations or warnings have you received in the past 6 months?
+                </label>
+                <p className="text-sm text-muted-foreground mb-4">Check all that apply</p>
+                <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                  {[
+                    "Section 3 / Dropshipping violation",
+                    "Review manipulation or abuse",
+                    "Inauthentic item complaint",
+                    "Used sold as new",
+                    "Listing policy violation",
+                    "Restricted products violation",
+                    "Fair pricing policy warning",
+                    "Late shipment rate warning",
+                    "Condition complaint",
+                    "Intellectual property complaint",
+                    "Performance notification",
+                    "Product safety complaint",
+                    "I have not received any violations or warnings"
+                  ].map((violation) => (
+                    <label
+                      key={violation}
+                      className="flex items-start gap-3 p-4 border-2 border-border rounded-lg cursor-pointer hover:border-primary transition-all bg-background"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={answers.violationTypes.includes(violation)}
+                        onChange={(e) => {
+                          if (violation === "I have not received any violations or warnings") {
+                            // If "none" is selected, clear all others
+                            setAnswers({
+                              ...answers,
+                              violationTypes: e.target.checked ? [violation] : []
+                            });
+                          } else {
+                            // If any other is selected, remove "none" if present
+                            const newTypes = e.target.checked
+                              ? [...answers.violationTypes.filter(v => v !== "I have not received any violations or warnings"), violation]
+                              : answers.violationTypes.filter(v => v !== violation);
+                            setAnswers({...answers, violationTypes: newTypes});
+                          }
+                        }}
+                        className="mt-0.5 h-5 w-5 rounded border-2 border-border text-primary focus:ring-2 focus:ring-primary/20"
+                        style={{ minWidth: '44px', minHeight: '44px' }}
+                      />
+                      <span className="text-base text-foreground leading-relaxed">{violation}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {currentStep === 12 && (
+              <div className="animate-fade-in">
+                <label className="text-2xl font-semibold text-foreground mb-6 block">
                   What's your phone number?
                 </label>
                 <input
@@ -596,7 +702,7 @@ export const ProtectionWizard = () => {
             )}
 
             {/* Tier Reveal */}
-            {currentStep === 10 && assignedTier && tiers[assignedTier] && (
+            {currentStep === 13 && assignedTier && tiers[assignedTier] && (
               <div className="text-center animate-fade-in">
                 <h3 className="text-3xl font-bold text-foreground mb-4">
                   Your Protection Plan
@@ -623,7 +729,7 @@ export const ProtectionWizard = () => {
                   </div>
                   
                   <Button 
-                    onClick={() => setCurrentStep(11)}
+                    onClick={() => setCurrentStep(14)}
                     size="lg"
                     className="w-full"
                   >
@@ -634,7 +740,7 @@ export const ProtectionWizard = () => {
             )}
 
             {/* Add-On Selection */}
-            {currentStep === 11 && assignedTier && (
+            {currentStep === 14 && assignedTier && (
               <div className="animate-fade-in">
                 <h3 className="text-3xl font-bold text-foreground mb-2 text-center">
                   Customize Your {tiers[assignedTier].name} Plan
@@ -718,7 +824,7 @@ export const ProtectionWizard = () => {
             )}
 
             {/* Confirmation Screen */}
-            {currentStep === 12 && (
+            {currentStep === 15 && (
               <div className="text-center animate-fade-in">
                 <div className="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in">
                   <Check className="h-10 w-10 text-white" />
@@ -811,7 +917,7 @@ export const ProtectionWizard = () => {
             )}
 
             {/* Navigation Buttons */}
-            {currentStep >= 1 && currentStep <= 9 && (
+            {currentStep >= 1 && currentStep <= 12 && (
               <div className="mt-8">
                 <Button
                   onClick={handleContinue}
