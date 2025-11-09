@@ -3,7 +3,9 @@ import { StickyTrustBar } from "@/components/account-health/StickyTrustBar";
 import { ProblemSolutionSection } from "@/components/account-health/ProblemSolutionSection";
 import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow";
 import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
+import { SuspensionCoverageBanner } from "@/components/account-health/SuspensionCoverageBanner";
 import { TierOverview } from "@/components/account-health/TierOverview";
+import { TierCalculatorPreview } from "@/components/account-health/TierCalculatorPreview";
 import { ProtectionWizard } from "@/components/account-health/ProtectionWizard";
 import { TierComparisonTable } from "@/components/account-health/TierComparisonTable";
 import { ComparisonTable } from "@/components/account-health/ComparisonTable";
@@ -20,6 +22,9 @@ const AccountHealthMonitoring = () => {
       {/* Hero Section with Animated Gradient */}
       
 
+      {/* Suspension Coverage Banner */}
+      <SuspensionCoverageBanner />
+
       {/* Problem → Solution Section */}
       
 
@@ -31,6 +36,9 @@ const AccountHealthMonitoring = () => {
 
       {/* Tier Overview Display */}
       <TierOverview />
+
+      {/* Tier Calculator Preview */}
+      <TierCalculatorPreview />
 
       {/* Tier Comparison Table - Feature Matrix */}
       <TierComparisonTable />
