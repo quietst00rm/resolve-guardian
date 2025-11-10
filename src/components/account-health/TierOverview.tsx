@@ -98,7 +98,7 @@ export const TierOverview = () => {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6" style={{
           fontSize: "15px"
         }}>
-            We analyze 12 critical factors to ensure you get the right level of protection at the right price
+            We analyze 11 critical factors to ensure you get the right level of protection at the right price
           </p>
 
           {/* Pills */}
@@ -124,9 +124,9 @@ export const TierOverview = () => {
               <div className="grid md:grid-cols-2 gap-8 text-left">
                 {/* Left Column */}
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">12 Factors We Analyze:</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">11 Factors We Analyze:</h3>
                   <ul className="space-y-2">
-                    {["Monthly revenue (trailing 12-month average)", "Number of ASINs managed", "Account age and maturity", "Previous suspension history", "Monthly violation frequency", "Intellectual property complaints", "Specific violation types received", "Brand Registry enrollment status", "Fulfillment method (FBA/FBM/Both)", "Business model (Private Label/Wholesale/Arbitrage)", "Product category risk levels", "Related account connections"].map((factor, idx) => <li key={idx} className="flex items-start gap-2">
+                    {["Monthly revenue (trailing 12-month average)", "Number of ASINs managed", "Account age and maturity", "Previous suspension history", "Monthly violation frequency", "Intellectual property complaints", "Specific violation types received", "Brand Registry enrollment status", "Fulfillment method (FBA/FBM/Both)", "Business model (Private Label/Wholesale/Arbitrage)", "Product category risk levels"].map((factor, idx) => <li key={idx} className="flex items-start gap-2">
                         <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-700">{factor}</span>
                       </li>)}
@@ -144,7 +144,7 @@ export const TierOverview = () => {
                   <div className="bg-[#EFF6FF] border border-blue-600 rounded-lg p-4 flex gap-3">
                     <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-gray-700">
-                      Your tier automatically adjusts if your risk profile changes—no manual intervention needed.
+                      Tiers are validated through Seller Central once service begins.
                     </p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export const TierOverview = () => {
                 </h2>
                 <p className="text-base text-gray-600 leading-relaxed mb-6">
                   No matter which tier you're assigned, suspension defense is always included. Our experts write your
-                  Plan of Action within 24 hours—no additional fees, no surprises.
+                  Plan of Action within 48 hours—no additional fees, no surprises.
                 </p>
 
                 {/* Badges */}
@@ -185,7 +185,7 @@ export const TierOverview = () => {
                   </div>
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 rounded-full">
                     <Check className="h-4 w-4 text-green-500" />
-                    <span className="text-sm font-medium text-gray-900">24-Hour Turnaround</span>
+                    <span className="text-sm font-medium text-gray-900">24-48 Hour Turnaround</span>
                   </div>
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-600 rounded-full">
                     <Check className="h-4 w-4 text-green-500" />
