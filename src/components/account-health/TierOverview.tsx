@@ -121,7 +121,7 @@ const TierCard = ({ tier }: { tier: (typeof tiers)[0] }) => {
           onClick={scrollToCalculator}
           className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center group shadow-md hover:shadow-lg h-auto"
         >
-          {tier.name === "EMPIRE" ? "Get Enterprise Assessment" : "Get Your Tier Assessment"}
+          Find My Protection Tier
           <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
         <p className="text-center text-sm text-gray-500 mt-3">Take 2-minute assessment</p>
