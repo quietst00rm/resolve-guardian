@@ -2,7 +2,6 @@ import { AnimatedGradientHero } from "@/components/account-health/AnimatedGradie
 import { StickyTrustBar } from "@/components/account-health/StickyTrustBar";
 import { ProblemSolutionSection } from "@/components/account-health/ProblemSolutionSection";
 import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow";
-import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
 import { TierOverview } from "@/components/account-health/TierOverview";
 import { ProtectionWizard } from "@/components/account-health/ProtectionWizard";
 import { TierComparisonTable } from "@/components/account-health/TierComparisonTable";
@@ -25,9 +24,6 @@ const AccountHealthMonitoring = () => {
 
       {/* Visual Process Flow - How It Works */}
       <VisualProcessFlow />
-
-      {/* Interactive Pricing Calculator */}
-      <InteractivePricingCalculator />
 
       {/* Tier Overview Display */}
       <TierOverview />
