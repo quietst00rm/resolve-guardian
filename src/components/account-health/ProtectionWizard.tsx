@@ -267,6 +267,13 @@ export const ProtectionWizard = () => {
     }
   }, [answers, currentStep]);
 
+  // Clear localStorage when wizard is completed (confirmation screen)
+  useEffect(() => {
+    if (currentStep === 15) {
+      localStorage.removeItem("protectionWizardData");
+    }
+  }, [currentStep]);
+
   const calculateTier = (monthlyRevenue: number): string => {
     const annualRevenue = monthlyRevenue * 12;
     
