@@ -39,7 +39,7 @@ const tiers = [
       "Slack channel + email support",
       "Twice-yearly compliance audits",
       "Quarterly strategy calls",
-      "Daily check-ins",
+      "Daily check-ins when at risk",
       "Executive escalation handling",
     ],
   },
@@ -61,7 +61,7 @@ const TierCard = ({ tier }: { tier: (typeof tiers)[0] }) => {
   const [showAllFeatures, setShowAllFeatures] = useState(false);
 
   const scrollToCalculator = () => {
-    const calculator = document.getElementById("pricing-calculator");
+    const calculator = document.getElementById("protection-wizard");
     calculator?.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -133,7 +133,7 @@ export const TierOverview = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const scrollToCalculator = () => {
-    const calculator = document.getElementById("pricing-calculator");
+    const calculator = document.getElementById("protection-wizard");
     calculator?.scrollIntoView({
       behavior: "smooth",
       block: "center",

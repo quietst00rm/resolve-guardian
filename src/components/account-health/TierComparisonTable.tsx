@@ -89,7 +89,7 @@ const features: ComparisonFeature[] = [
   },
   {
     category: "Violation Handling",
-    feature: "Daily Check-ins",
+    feature: "Daily Check-ins When at Risk",
     guardian: false,
     defender: false,
     fortress: true,
@@ -192,7 +192,7 @@ export const TierComparisonTable = () => {
   const categories = Array.from(new Set(features.map((f) => f.category)));
   const [expandedTier, setExpandedTier] = React.useState<string | null>(null);
   const scrollToCalculator = () => {
-    const calculator = document.getElementById("pricing-calculator");
+    const calculator = document.getElementById("protection-wizard");
     calculator?.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -230,28 +230,24 @@ export const TierComparisonTable = () => {
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>GUARDIAN</div>
-                  <div className="text-xs font-normal text-blue-100">(Low Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$349/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>DEFENDER</div>
-                  <div className="text-xs font-normal text-blue-100">(Moderate Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$899/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>FORTRESS</div>
-                  <div className="text-xs font-normal text-blue-100">(Elevated Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$2,199/mo</div>
                 </div>
               </div>
               <div className="p-6 text-center font-semibold text-lg border-l border-blue-500">
                 <div className="space-y-1">
                   <div>EMPIRE</div>
-                  <div className="text-xs font-normal text-blue-100">(High Risk)</div>
                   <div className="text-sm font-normal text-blue-100">$5,999/mo</div>
                 </div>
               </div>

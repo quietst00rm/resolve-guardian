@@ -205,7 +205,7 @@ export const PersonaTabs = () => {
                   size="lg"
                   className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
                   onClick={() => {
-                    const calculator = document.getElementById('pricing-calculator');
+                    const calculator = document.getElementById('protection-wizard');
                     calculator?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                   }}
                 >
