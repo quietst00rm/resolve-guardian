@@ -811,32 +811,14 @@ export const ProtectionWizard = () => {
                     const costs = calculateSuspensionCosts(monthlyRevenue);
                     const protectionPrice = tiers[assignedTier].price;
                     
-                    // Calculate the actual ratio
-                    const ratio = protectionPrice / costs.daily;
-                    
-                    // Calculate hours of daily sales
-                    const hoursOfSales = (ratio * 24).toFixed(1);
-                    
-                    // Calculate percentage of monthly revenue
-                    const percentageOfRevenue = ((protectionPrice / monthlyRevenue) * 100).toFixed(2);
-                    
-                    // Determine comparison text based on ratio
-                    let comparisonText = "";
-                    if (ratio < 0.033) {
-                      comparisonText = "less than 1/30th of ONE suspension day";
-                    } else if (ratio < 0.05) {
-                      comparisonText = "less than 1/20th of ONE suspension day";
-                    } else if (ratio < 0.1) {
-                      comparisonText = "less than 1/10th of ONE suspension day";
-                    } else {
-                      const inverseFraction = Math.round(1 / ratio);
-                      comparisonText = `less than 1/${inverseFraction}th of ONE suspension day`;
-                    }
+                    // Calculate days of losses per year
+                    const annualProtectionCost = protectionPrice * 12;
+                    const daysOfLosses = (annualProtectionCost / costs.daily).toFixed(1);
                     
                     return (
-                      <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-5 mb-6 shadow-md">
+                      <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-4 mb-6">
                         {/* Header */}
-                        <div className="flex items-center gap-2 mb-5">
+                        <div className="flex items-center gap-2 mb-4">
                           <svg
                             className="w-5 h-5 text-[#DC2626] flex-shrink-0"
                             fill="none"
@@ -850,66 +832,44 @@ export const ProtectionWizard = () => {
                               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
                             />
                           </svg>
-                          <h5 className="text-[15px] font-semibold text-[#B91C1C]">
-                            What You Risk Without Protection
+                          <h5 className="text-sm font-semibold text-red-800">
+                            Suspension Cost Without Protection
                           </h5>
                         </div>
                         
-                        {/* Single Prominent Cost Block */}
-                        <div className="text-center md:text-left mb-5">
-                          <p className="text-xs text-[#DC2626] font-medium mb-2">
-                            Daily Loss if Suspended:
+                        {/* Main Display - Daily Loss (Focal Point) */}
+                        <div className="text-center mb-4">
+                          <p className="text-2xl font-bold text-red-700">
+                            💰 Daily Loss: ${formatCurrency(costs.daily)}
                           </p>
-                          <p 
-                            className="text-2xl md:text-3xl font-bold text-[#B91C1C] mb-3 animate-fade-in"
-                            style={{ 
-                              animationDelay: '500ms',
-                              textShadow: '0 0 20px rgba(220, 38, 38, 0.2)'
-                            }}
-                          >
-                            ${formatCurrency(costs.daily)}
-                          </p>
-                          
-                          {/* Additional Timeframes */}
-                          <div className="text-xs text-[#DC2626] space-y-1 md:space-y-0">
-                            <div className="md:inline">
-                              <span className="font-medium">Weekly:</span> ${formatCurrency(costs.weekly)}
-                            </div>
-                            <span className="hidden md:inline mx-2">|</span>
-                            <div className="md:inline">
-                              <span className="font-medium">Monthly:</span> ${formatCurrency(costs.monthly)}
-                            </div>
-                            <span className="hidden md:inline mx-2">|</span>
-                            <div className="md:inline">
-                              <span className="font-medium">Yearly:</span> ${formatCurrency(costs.yearly)}
-                            </div>
+                        </div>
+                        
+                        {/* Secondary Timeframes - 3-Column Grid */}
+                        <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+                          <div>
+                            <p className="text-sm text-gray-700 mb-1">📅 Weekly</p>
+                            <p className="text-base font-medium text-gray-700">
+                              ${formatCurrency(costs.weekly)}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-700 mb-1">📆 Monthly</p>
+                            <p className="text-base font-medium text-gray-700">
+                              ${formatCurrency(costs.monthly)}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-700 mb-1">📊 Yearly</p>
+                            <p className="text-base font-medium text-gray-700">
+                              ${formatCurrency(costs.yearly)}
+                            </p>
                           </div>
                         </div>
                         
-                        {/* Enhanced Comparison Statement */}
-                        <div className="bg-[#DBEAFE] border-l-4 border-blue-600 rounded-lg px-4 py-3 flex items-start gap-2">
-                          <svg
-                            className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                            />
-                          </svg>
-                          <div>
-                            <p className="text-sm font-medium text-blue-700">
-                              Your monthly protection costs LESS than losing just {hoursOfSales} HOURS of sales
-                            </p>
-                            <p className="text-xs text-blue-600 mt-1">
-                              Protection {comparisonText} • Only {percentageOfRevenue}% of monthly revenue
-                            </p>
-                          </div>
-                        </div>
+                        {/* Simple Value Statement */}
+                        <p className="text-xs italic text-gray-600 text-center">
+                          Protection = Less than {daysOfLosses} days of losses per year
+                        </p>
                       </div>
                     );
                   })()}
