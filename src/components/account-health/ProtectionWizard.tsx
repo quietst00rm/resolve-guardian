@@ -630,18 +630,15 @@ export const ProtectionWizard = () => {
                 <p className="text-sm text-muted-foreground mb-4">Check all that apply</p>
                 <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
                   {[
-                    "Section 3 / Dropshipping violation",
-                    "Review manipulation or abuse",
-                    "Inauthentic item complaint",
-                    "Used sold as new",
-                    "Listing policy violation",
-                    "Restricted products violation",
-                    "Fair pricing policy warning",
-                    "Late shipment rate warning",
-                    "Condition complaint",
-                    "Intellectual property complaint",
-                    "Performance notification",
-                    "Product safety complaint",
+                    "Suspected IP",
+                    "Received IP",
+                    "Product Authenticity",
+                    "Product Condition Complaints",
+                    "Product Safety Complaints",
+                    "Listing Policy",
+                    "Restricted Product",
+                    "Dropshipping",
+                    "Review Manipulation",
                     "I have not received any violations or warnings"
                   ].map((violation) => (
                     <label
@@ -842,9 +839,7 @@ export const ProtectionWizard = () => {
                 </h3>
                 
                 <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto leading-relaxed">
-                  We've received your information and sent a detailed breakdown of your protection plan to <strong>{answers.email}</strong>.
-                  <br/><br/>
-                  Our team will contact you within 24 hours to finalize your account setup and answer any questions.
+                  We've received your information. Our team will contact you within 24 hours to finalize your account setup and answer any questions.
                 </p>
 
                 <div className="border-t border-border my-8" />
@@ -910,7 +905,7 @@ export const ProtectionWizard = () => {
 
                 <div className="text-muted-foreground mb-6">
                   <p className="font-semibold mb-2">Questions? Contact us:</p>
-                  <p>📧 support@sellerresolve.com</p>
+                  <p>📧 <a href="mailto:help@sellerresolve.com" className="text-primary hover:underline">help@sellerresolve.com</a></p>
                 </div>
 
                 <Button
