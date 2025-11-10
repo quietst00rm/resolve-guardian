@@ -878,7 +878,7 @@ export const ProtectionWizard = () => {
                         : "bg-background border-border text-foreground hover:border-red-400"
                     }`}
                   >
-                    Yes, I've received violations
+                    Yes
                   </button>
                   <button
                     onClick={() => {
@@ -891,7 +891,7 @@ export const ProtectionWizard = () => {
                         : "bg-background border-border text-foreground hover:border-green-400"
                     }`}
                   >
-                    No violations received
+                    No
                   </button>
                 </div>
               </div>
