@@ -10,36 +10,35 @@ export const TrustAuthoritySection = () => {
   const trustMetrics = [
     {
       icon: Users,
-      value: "375+",
-      label: "Sellers Protected",
-      description: "Active accounts monitored daily"
+      value: "50+",
+      label: "Combined Years Experience",
+      description: "Amazon platform expertise"
     },
     {
       icon: Shield,
       value: "98.7%",
-      label: "Prevention Rate",
+      label: "Success Rate",
       description: "Violations caught before suspension"
     },
     {
       icon: Award,
-      value: "12+ Years",
-      label: "Amazon Expertise",
-      description: "Deep platform knowledge"
+      value: "<24 hrs",
+      label: "Response Time",
+      description: "Emergency escalation"
     },
     {
       icon: TrendingUp,
-      value: "6,750+",
-      label: "Cases Handled",
-      description: "Successful resolutions"
+      value: "8,500+",
+      label: "Cases Resolved",
+      description: "Successful interventions"
     }
   ];
 
   const credentials = [
-    "Former Amazonians with deep platform expertise",
-    "Certified Amazon Policy Experts",
-    "Direct Relationships with Amazon Support Teams",
-    "Proprietary violation tracking, analysis, and strategy technology",
-    "24/7 Account Monitoring Infrastructure"
+    "Proprietary violation tracking and analysis technology",
+    "Direct escalation channels for urgent account issues",
+    "24/7 Account Monitoring Infrastructure",
+    "White-glove onboarding with dedicated account strategist"
   ];
 
   return (
@@ -50,7 +49,7 @@ export const TrustAuthoritySection = () => {
           <div className="mb-6">
             <span className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full text-sm font-bold uppercase tracking-widest">
               <Shield className="h-4 w-4" />
-              TRUSTED BY THOUSANDS
+              TRUSTED BY TOP 100 SELLERS
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
@@ -68,14 +67,14 @@ export const TrustAuthoritySection = () => {
             return (
               <div 
                 key={index}
-                className="glass-morphism rounded-xl p-6 text-center hover:scale-105 transition-transform duration-200"
+                className="glass-morphism rounded-xl p-6 text-center cursor-pointer transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] group"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Icon className="h-7 w-7 text-primary" />
+                  <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center transition-all duration-300 group-hover:bg-primary/30 group-hover:shadow-lg group-hover:shadow-primary/50">
+                    <Icon className="h-7 w-7 text-primary transition-all duration-300" />
                   </div>
                 </div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2 transition-all duration-300 group-hover:text-blue-100">
                   {metric.value}
                 </div>
                 <div className="text-sm font-semibold text-gray-200 mb-1">
@@ -98,9 +97,9 @@ export const TrustAuthoritySection = () => {
             {credentials.map((credential, index) => (
               <div 
                 key={index}
-                className="flex items-start gap-3 p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                className="flex items-start gap-3 p-4 rounded-lg bg-white/5 transition-all duration-200 ease-in-out hover:bg-white/10 hover:translate-x-1 group cursor-pointer"
               >
-                <CheckCircle className="h-6 w-6 text-primary shrink-0 mt-0.5" />
+                <CheckCircle className="h-6 w-6 text-primary shrink-0 mt-0.5 transition-transform duration-400 ease-in-out group-hover:rotate-360" />
                 <span className="text-gray-200">{credential}</span>
               </div>
             ))}
