@@ -14,13 +14,13 @@ import { StickyMobileFooter } from "@/components/account-health/StickyMobileFoot
 const AccountHealthMonitoring = () => {
   return <div className="min-h-screen bg-background">
       {/* Sticky Trust Bar - appears on scroll */}
-      <StickyTrustBar />
+      
 
       {/* Hero Section with Animated Gradient */}
-      <AnimatedGradientHero />
+      
 
       {/* Problem → Solution Section */}
-      <ProblemSolutionSection />
+      
 
       {/* Visual Process Flow - How It Works */}
       <VisualProcessFlow />
@@ -35,10 +35,10 @@ const AccountHealthMonitoring = () => {
       <ProtectionWizard />
 
       {/* Comparison Table */}
-      <ComparisonTable />
+      
 
       {/* Bento Grid Key Features */}
-      <BentoGridFeatures />
+      
 
       {/* Trust & Authority Section */}
       <TrustAuthoritySection />
@@ -47,7 +47,7 @@ const AccountHealthMonitoring = () => {
       <PersonaTabs />
 
       {/* Interactive FAQ */}
-      <InteractiveFAQ />
+      
 
       {/* Testimonials */}
 
