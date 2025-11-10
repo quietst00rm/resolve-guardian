@@ -58,6 +58,18 @@ const AccountHealthMonitoring = () => {
 
       {/* Sticky Mobile Footer */}
       <StickyMobileFooter />
+
+      {/* Emergency reset button - subtle helper for stuck users */}
+      <button 
+        onClick={() => {
+          localStorage.removeItem('protectionWizardData');
+          window.location.reload();
+        }}
+        className="fixed bottom-2 right-2 text-[10px] opacity-20 hover:opacity-60 transition-opacity bg-muted px-2 py-1 rounded"
+        title="Reset calculator if stuck"
+      >
+        Reset Calculator
+      </button>
     </div>;
 };
 export default AccountHealthMonitoring;

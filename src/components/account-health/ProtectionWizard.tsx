@@ -243,16 +243,37 @@ export const ProtectionWizard = () => {
     if (saved) {
       try {
         const data = JSON.parse(saved);
-        // Ensure violationTypes is always an array
-        const loadedAnswers = {
-          ...answers,
-          ...data.answers,
-          violationTypes: Array.isArray(data.answers?.violationTypes) ? data.answers.violationTypes : []
-        };
-        setAnswers(loadedAnswers);
-        setCurrentStep(data.currentStep || 1);
+        
+        // If calculator was completed (step >= 12), reset to step 1
+        // This allows users to start fresh on page refresh after completion
+        if (data.currentStep >= 12) {
+          console.log("Calculator was completed, resetting to step 1");
+          // Keep the answers for reference but reset step
+          const resetData = {
+            ...data,
+            currentStep: 1
+          };
+          localStorage.setItem('protectionWizardData', JSON.stringify(resetData));
+          setCurrentStep(1);
+          return;
+        }
+        
+        // Only restore if within valid question range (1-11)
+        if (data.currentStep > 0 && data.currentStep <= 11) {
+          const loadedAnswers = {
+            ...answers,
+            ...data.answers,
+            violationTypes: Array.isArray(data.answers?.violationTypes) ? data.answers.violationTypes : []
+          };
+          setAnswers(loadedAnswers);
+          setCurrentStep(data.currentStep);
+        } else {
+          // Invalid step, reset to 1
+          setCurrentStep(1);
+        }
       } catch (e) {
-        console.error("Failed to load saved data");
+        console.error("Failed to load saved data, resetting");
+        setCurrentStep(1);
       }
     }
   }, []);
@@ -289,10 +310,25 @@ export const ProtectionWizard = () => {
     return "";
   };
 
+  const isValidStepTransition = (fromStep: number, toStep: number): boolean => {
+    // Only allow sequential progression through questions (1-11)
+    if (fromStep >= 1 && fromStep <= 11) {
+      return toStep === fromStep + 1;
+    }
+    // Allow specific jumps in results flow
+    if (fromStep === 11) return toStep === 13; // After contact -> tier reveal
+    if (fromStep === 13) return toStep === 14; // After tier -> add-ons
+    if (fromStep === 14) return toStep === 15; // After add-ons -> confirmation
+    return false;
+  };
+
   const autoAdvance = (callback: () => void) => {
     setTimeout(() => {
       callback();
-      setCurrentStep(currentStep + 1);
+      const nextStep = currentStep + 1;
+      if (isValidStepTransition(currentStep, nextStep)) {
+        setCurrentStep(nextStep);
+      }
     }, 300);
   };
 
@@ -332,7 +368,7 @@ export const ProtectionWizard = () => {
         
         setAssignedTier(tier);
         setIsAnalyzing(false);
-        setCurrentStep(currentStep + 1);
+        setCurrentStep(13); // Jump directly to tier reveal (skip step 12)
       }, 4500);
       
       return; // Don't immediately move to next step
@@ -366,6 +402,7 @@ export const ProtectionWizard = () => {
   };
 
   const handleReset = () => {
+    // Clear all state
     setCurrentStep(1);
     setAnswers({
       asins: "",
@@ -383,12 +420,24 @@ export const ProtectionWizard = () => {
     });
     setAssignedTier("");
     setSelectedAddOns([]);
+    setIsAnalyzing(false);
+    setIsSubmitting(false);
+    
+    // Clear localStorage
     localStorage.removeItem("protectionWizardData");
     
     // Smooth scroll to top of wizard
-    document.getElementById("protection-wizard")?.scrollIntoView({ 
-      behavior: "smooth", 
-      block: "start" 
+    const wizardElement = document.getElementById("protection-wizard");
+    if (wizardElement) {
+      wizardElement.scrollIntoView({ 
+        behavior: "smooth", 
+        block: "start" 
+      });
+    }
+    
+    toast({
+      title: "Calculator reset",
+      description: "Starting fresh assessment",
     });
   };
 
@@ -412,7 +461,8 @@ export const ProtectionWizard = () => {
     handleSubmit();
   };
 
-  const progressPercentage = isAnalyzing ? 100 : (currentStep / 11) * 100;
+  // Calculate progress: 100% when analyzing or showing results (step >= 12)
+  const progressPercentage = isAnalyzing || currentStep >= 12 ? 100 : (currentStep / 11) * 100;
 
   const isStepValid = () => {
     switch (currentStep) {
