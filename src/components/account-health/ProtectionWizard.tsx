@@ -282,7 +282,7 @@ export const ProtectionWizard = () => {
       // Start analyzing animation
       setIsAnalyzing(true);
       
-      // Calculate tier after 3.5 second delay
+      // Calculate tier after 4.5 second delay
       setTimeout(() => {
         const revenue = parseRevenue(answers.revenue);
         const tier = calculateTier(revenue);
@@ -300,7 +300,7 @@ export const ProtectionWizard = () => {
         setAssignedTier(tier);
         setIsAnalyzing(false);
         setCurrentStep(currentStep + 1);
-      }, 3500);
+      }, 4500);
       
       return; // Don't immediately move to next step
     }
