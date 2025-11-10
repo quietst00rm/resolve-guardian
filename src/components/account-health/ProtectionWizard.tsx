@@ -205,6 +205,21 @@ export const ProtectionWizard = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
+  // Helper function to format currency
+  const formatCurrency = (value: number): string => {
+    return Math.round(value).toLocaleString('en-US');
+  };
+
+  // Helper function to calculate suspension costs
+  const calculateSuspensionCosts = (monthlyRevenue: number) => {
+    const daily = monthlyRevenue / 30;
+    const weekly = monthlyRevenue / 4;
+    const monthly = monthlyRevenue;
+    const yearly = monthlyRevenue * 12;
+    
+    return { daily, weekly, monthly, yearly };
+  };
+
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("protectionWizardData");
@@ -783,6 +798,75 @@ export const ProtectionWizard = () => {
                   <p className="text-3xl font-semibold text-foreground mb-6">
                     ${tiers[assignedTier].price.toLocaleString()}<span className="text-xl">/month</span>
                   </p>
+                  
+                  {/* Suspension Cost Risk Alert */}
+                  {(() => {
+                    const monthlyRevenue = parseRevenue(answers.revenue);
+                    const costs = calculateSuspensionCosts(monthlyRevenue);
+                    const protectionPrice = tiers[assignedTier].price;
+                    const fraction = (protectionPrice / costs.daily).toFixed(1);
+                    
+                    return (
+                      <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-4 md:p-4 mb-6 shadow-sm">
+                        {/* Header */}
+                        <div className="flex items-center gap-2 mb-4">
+                          <svg
+                            className="w-5 h-5 text-[#DC2626] flex-shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                            />
+                          </svg>
+                          <h5 className="text-sm font-semibold text-[#B91C1C]">
+                            Your Suspension Cost Risk
+                          </h5>
+                        </div>
+                        
+                        {/* Two Column Layout */}
+                        <div className="grid md:grid-cols-2 gap-4 mb-4">
+                          {/* Left Column - Primary Display */}
+                          <div className="space-y-1">
+                            <p className="text-xs text-[#DC2626] font-medium">
+                              Per Day Without Protection:
+                            </p>
+                            <p 
+                              className="text-xl md:text-2xl font-bold text-[#B91C1C] animate-fade-in"
+                              style={{ animationDelay: '500ms' }}
+                            >
+                              ${formatCurrency(costs.daily)}
+                            </p>
+                          </div>
+                          
+                          {/* Right Column - Additional Timeframes */}
+                          <div className="space-y-1 text-sm">
+                            <div className="flex justify-between text-[#DC2626]">
+                              <span>Weekly:</span>
+                              <span className="font-medium">${formatCurrency(costs.weekly)}</span>
+                            </div>
+                            <div className="flex justify-between text-[#DC2626]">
+                              <span>Monthly:</span>
+                              <span className="font-medium">${formatCurrency(costs.monthly)}</span>
+                            </div>
+                            <div className="flex justify-between text-[#DC2626]">
+                              <span>Yearly:</span>
+                              <span className="font-semibold">${formatCurrency(costs.yearly)}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Comparison Statement */}
+                        <p className="text-xs text-gray-700 italic text-center">
+                          Protection costs less than 1/{fraction} of ONE suspension day
+                        </p>
+                      </div>
+                    );
+                  })()}
                   
                   <div className="text-left space-y-3 mb-8">
                     {tiers[assignedTier].features.map((feature, idx) => (
