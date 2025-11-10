@@ -89,7 +89,7 @@ export const TrustAuthoritySection = () => {
         </div>
 
         {/* Credentials Section */}
-        <div className="glass-morphism rounded-2xl p-8 md:p-12 mb-12">
+        <div className="glass-morphism rounded-2xl p-8 md:p-12">
           <h3 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
             Why Sellers Trust Us With Their Livelihood
           </h3>
@@ -104,17 +104,6 @@ export const TrustAuthoritySection = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Button 
-            onClick={scrollToCalculator}
-            size="lg"
-            className="bg-primary hover:bg-blue-600 text-white px-8 py-6 text-lg font-semibold h-auto shadow-2xl transform hover:scale-105 transition-all"
-          >
-            Get Protected Today
-          </Button>
         </div>
       </div>
     </section>
