@@ -2,6 +2,7 @@ import { AnimatedGradientHero } from "@/components/account-health/AnimatedGradie
 import { StickyTrustBar } from "@/components/account-health/StickyTrustBar";
 import { ProblemSolutionSection } from "@/components/account-health/ProblemSolutionSection";
 import { VisualProcessFlow } from "@/components/account-health/VisualProcessFlow";
+import { InteractivePricingCalculator } from "@/components/account-health/InteractivePricingCalculator";
 import { TierOverview } from "@/components/account-health/TierOverview";
 import { ProtectionWizard } from "@/components/account-health/ProtectionWizard";
 import { TierComparisonTable } from "@/components/account-health/TierComparisonTable";
@@ -14,16 +15,19 @@ import { StickyMobileFooter } from "@/components/account-health/StickyMobileFoot
 const AccountHealthMonitoring = () => {
   return <div className="min-h-screen bg-background">
       {/* Sticky Trust Bar - appears on scroll */}
-      <StickyTrustBar />
+      
 
       {/* Hero Section with Animated Gradient */}
-      <AnimatedGradientHero />
+      
 
       {/* Problem → Solution Section */}
-      <ProblemSolutionSection />
+      
 
       {/* Visual Process Flow - How It Works */}
       <VisualProcessFlow />
+
+      {/* Interactive Pricing Calculator */}
+      
 
       {/* Tier Overview Display */}
       <TierOverview />
@@ -35,10 +39,10 @@ const AccountHealthMonitoring = () => {
       <ProtectionWizard />
 
       {/* Comparison Table */}
-      <ComparisonTable />
+      
 
       {/* Bento Grid Key Features */}
-      <BentoGridFeatures />
+      
 
       {/* Trust & Authority Section */}
       <TrustAuthoritySection />
@@ -47,7 +51,7 @@ const AccountHealthMonitoring = () => {
       <PersonaTabs />
 
       {/* Interactive FAQ */}
-      <InteractiveFAQ />
+      
 
       {/* Testimonials */}
 

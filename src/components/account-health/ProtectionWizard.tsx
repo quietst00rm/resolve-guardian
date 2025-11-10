@@ -267,13 +267,6 @@ export const ProtectionWizard = () => {
     }
   }, [answers, currentStep]);
 
-  // Clear localStorage when wizard is completed (confirmation screen)
-  useEffect(() => {
-    if (currentStep === 15) {
-      localStorage.removeItem("protectionWizardData");
-    }
-  }, [currentStep]);
-
   const calculateTier = (monthlyRevenue: number): string => {
     const annualRevenue = monthlyRevenue * 12;
     
@@ -835,18 +828,9 @@ export const ProtectionWizard = () => {
                     const costs = calculateSuspensionCosts(monthlyRevenue);
                     const protectionPrice = tiers[assignedTier].price;
                     
-                    // Calculate hours of monthly revenue
-                    const hoursOfRevenue = protectionPrice / (monthlyRevenue / 730);
-                    
-                    // Format hours based on value
-                    let formattedHours: string;
-                    if (hoursOfRevenue > 50) {
-                      formattedHours = 'secured'; // Edge case for very low revenue
-                    } else if (hoursOfRevenue < 10) {
-                      formattedHours = hoursOfRevenue.toFixed(1); // 1 decimal place under 10
-                    } else {
-                      formattedHours = Math.round(hoursOfRevenue).toString(); // Whole number over 10
-                    }
+                    // Calculate days of losses per year
+                    const annualProtectionCost = protectionPrice * 12;
+                    const daysOfLosses = (annualProtectionCost / costs.daily).toFixed(1);
                     
                     return (
                       <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-3 md:p-4 mb-6">
@@ -926,23 +910,16 @@ export const ProtectionWizard = () => {
                           </div>
                         </div>
                         
-                        {/* Hours-Based Value Comparison */}
+                        {/* Simple Value Statement - Responsive Text */}
                         <p className="text-xs italic text-gray-600 text-center">
-                          {formattedHours === 'secured' ? (
-                            // Edge case: Very low revenue accounts
-                            <span>💡 Protection investment secured</span>
-                          ) : (
-                            <>
-                              {/* Mobile: Shortened text */}
-                              <span className="md:hidden">
-                                💡 Costs {formattedHours} hours of monthly revenue
-                              </span>
-                              {/* Desktop: Full text */}
-                              <span className="hidden md:inline">
-                                💡 Protection costs what you earn in {formattedHours} hours per month
-                              </span>
-                            </>
-                          )}
+                          {/* Mobile: Shortened text */}
+                          <span className="md:hidden">
+                            Protection = Less than {daysOfLosses} days of losses/year
+                          </span>
+                          {/* Desktop: Full text */}
+                          <span className="hidden md:inline">
+                            Protection = Less than {daysOfLosses} days of losses per year
+                          </span>
                         </p>
                       </div>
                     );
