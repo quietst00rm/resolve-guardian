@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 export const InteractivePricingCalculator = () => {
@@ -12,6 +12,48 @@ export const InteractivePricingCalculator = () => {
     monthlyRevenue: 0
   });
   const [tierResult, setTierResult] = useState<any>(null);
+
+  const resetCalculator = () => {
+    setCurrentStep(1);
+    setIsCalculating(false);
+    setShowResults(false);
+    setAnswers({
+      asinCount: "",
+      suspended: "",
+      violationCount: "",
+      monthlyRevenue: 0
+    });
+    setTierResult(null);
+    
+    // Clear input fields
+    const asinInput = document.getElementById("asinCount") as HTMLInputElement;
+    const violationInput = document.getElementById("violationCount") as HTMLInputElement;
+    const revenueInput = document.getElementById("monthlyRevenue") as HTMLInputElement;
+    if (asinInput) asinInput.value = "";
+    if (violationInput) violationInput.value = "";
+    if (revenueInput) revenueInput.value = "";
+    
+    console.log("Calculator reset to step 1");
+  };
+
+  // Debug logging on mount
+  useEffect(() => {
+    console.log("Calculator mounted", {
+      currentStep,
+      showResults,
+      hasAnswers: !!answers.asinCount
+    });
+  }, []);
+
+  // URL parameter reset support
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('reset') === 'true') {
+      resetCalculator();
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
   const formatRevenue = (value: string) => {
     const numbers = value.replace(/[^0-9]/g, "");
     if (numbers) {
@@ -101,8 +143,14 @@ export const InteractivePricingCalculator = () => {
       setTierResult(tier);
       setIsCalculating(false);
       setShowResults(true);
+      console.log("Calculator completed, showing results:", {
+        tier: tier.name,
+        price: tier.price,
+        revenue: revenue
+      });
     }, 1500);
   };
+
   const scrollToPricing = () => {
     const pricingSection = document.getElementById("pricing-tiers");
     pricingSection?.scrollIntoView({
@@ -256,10 +304,23 @@ export const InteractivePricingCalculator = () => {
                   </div>
                 </div>
 
-                <Button onClick={scrollToPricing} size="lg" className="px-8 py-6 text-lg">
-                  Start {tierResult.name}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <div className="space-y-4">
+                  {/* Primary CTA */}
+                  <Button onClick={scrollToPricing} size="lg" className="w-full px-8 py-6 text-lg">
+                    Continue to {tierResult.name}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  
+                  {/* Reset Option */}
+                  <Button 
+                    onClick={resetCalculator} 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full text-muted-foreground hover:text-foreground"
+                  >
+                    Start New Assessment
+                  </Button>
+                </div>
               </div>}
           </div>
         </div>
