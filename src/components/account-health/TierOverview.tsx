@@ -2,90 +2,84 @@ import { useState } from "react";
 import { ArrowRight, Check, ChevronDown, ShieldCheck, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-const tiers = [{
-  name: "GUARDIAN",
-  price: 349,
-  features: [
-    "Daily violation monitoring",
-    "72-hour violation response time",
-    "Unlimited violation handling",
-    "Custom POA drafting & submission",
-    "Weekly account health reports",
-    "Email support with 48-hour response",
-    "Account health score monitoring",
-    "48-hour communication response time"
-  ]
-}, {
-  name: "DEFENDER",
-  price: 899,
-  inheritFrom: "GUARDIAN",
-  features: [
-    "48-hour violation response (2x faster)",
-    "Annual compliance audit",
-    "Priority violation queue",
-    "24-hour communication response time"
-  ]
-}, {
-  name: "FORTRESS",
-  price: 2199,
-  inheritFrom: "DEFENDER",
-  features: [
-    "24-hour violation response (2x faster)",
-    "6-hour communication response",
-    "Dedicated account manager",
-    "Slack channel + email support",
-    "Twice-yearly compliance audits",
-    "Quarterly strategy calls",
-    "Daily check-ins during active violations",
-    "Executive escalation handling"
-  ]
-}, {
-  name: "EMPIRE",
-  price: 5999,
-  inheritFrom: "FORTRESS",
-  features: [
-    "Same-day violation response",
-    "2-hour communication response",
-    "Senior dedicated account manager",
-    "WhatsApp + Slack + Phone support",
-    "Quarterly compliance audits",
-    "Monthly strategy sessions"
-  ]
-}];
-const TierCard = ({
-  tier
-}: {
-  tier: typeof tiers[0];
-}) => {
+const tiers = [
+  {
+    name: "GUARDIAN",
+    price: 349,
+    features: [
+      "Daily violation monitoring",
+      "72-hour violation response time",
+      "Unlimited violation handling",
+      "Custom POA drafting & submission",
+      "Weekly account health reports",
+      "Email support with 48-hour response",
+      "Account health score monitoring",
+      "48-hour communication response time",
+    ],
+  },
+  {
+    name: "DEFENDER",
+    price: 899,
+    inheritFrom: "GUARDIAN",
+    features: [
+      "48-hour violation response (2x faster)",
+      "Annual compliance audit",
+      "Priority violation queue",
+      "24-hour communication response time",
+    ],
+  },
+  {
+    name: "FORTRESS",
+    price: 2199,
+    inheritFrom: "DEFENDER",
+    features: [
+      "24-hour violation response (2x faster)",
+      "6-hour communication response",
+      "Dedicated account manager",
+      "Slack channel + email support",
+      "Twice-yearly compliance audits",
+      "Quarterly strategy calls",
+      "Daily check-ins",
+      "Executive escalation handling",
+    ],
+  },
+  {
+    name: "EMPIRE",
+    price: 5999,
+    inheritFrom: "FORTRESS",
+    features: [
+      "Same-day violation response",
+      "2-hour communication response",
+      "Senior dedicated account manager",
+      "WhatsApp + Slack + Phone support",
+      "Quarterly compliance audits",
+      "Monthly strategy sessions",
+    ],
+  },
+];
+const TierCard = ({ tier }: { tier: (typeof tiers)[0] }) => {
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  
+
   const scrollToCalculator = () => {
-    const calculator = document.getElementById('pricing-calculator');
+    const calculator = document.getElementById("pricing-calculator");
     calculator?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
+      behavior: "smooth",
+      block: "center",
     });
   };
 
   const displayedFeatures = showAllFeatures ? tier.features : tier.features.slice(0, 5);
   const hasMoreFeatures = tier.features.length > 5;
-  
+
   return (
     <div className="relative flex flex-col bg-white rounded-2xl border-2 border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-8 min-h-[520px]">
-      
       {/* Tier Name */}
-      <h3 className="text-3xl font-bold text-gray-900 mb-4">
-        {tier.name}
-      </h3>
+      <h3 className="text-3xl font-bold text-gray-900 mb-4">{tier.name}</h3>
 
       {/* Price */}
       <div className="mb-6">
-        <span className="text-5xl font-extrabold text-blue-600 tabular-nums">
-          ${tier.price.toLocaleString()}
-        </span>
-        <span className="text-xl text-gray-600 ml-2">
-          /month
-        </span>
+        <span className="text-5xl font-extrabold text-blue-600 tabular-nums">${tier.price.toLocaleString()}</span>
+        <span className="text-xl text-gray-600 ml-2">/month</span>
       </div>
 
       {/* Inheritance Callout (if applicable) */}
@@ -116,38 +110,36 @@ const TierCard = ({
           onClick={() => setShowAllFeatures(!showAllFeatures)}
           className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1 mb-8 transition-colors"
         >
-          {showAllFeatures ? 'Show less' : 'Show all features'}
-          <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAllFeatures ? 'rotate-180' : ''}`} />
+          {showAllFeatures ? "Show less" : "Show all features"}
+          <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAllFeatures ? "rotate-180" : ""}`} />
         </button>
       )}
 
       {/* CTA Button */}
       <div className="mt-auto">
-        <Button 
+        <Button
           onClick={scrollToCalculator}
           className="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 flex items-center justify-center group shadow-md hover:shadow-lg h-auto"
         >
           {tier.name === "EMPIRE" ? "Get Enterprise Assessment" : "Get Your Tier Assessment"}
           <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
-        <p className="text-center text-sm text-gray-500 mt-3">
-          Take 2-minute assessment
-        </p>
+        <p className="text-center text-sm text-gray-500 mt-3">Take 2-minute assessment</p>
       </div>
     </div>
   );
 };
 export const TierOverview = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const scrollToCalculator = () => {
-    const calculator = document.getElementById('pricing-calculator');
+    const calculator = document.getElementById("pricing-calculator");
     calculator?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
+      behavior: "smooth",
+      block: "center",
     });
   };
-  
+
   return (
     <section id="tier-overview" className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,10 +148,10 @@ export const TierOverview = () => {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Your protection tier is custom-calculated based on your account's unique risk profile
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6" style={{ fontSize: '15px' }}>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6" style={{ fontSize: "15px" }}>
             We analyze 12 critical factors to ensure you get the right level of protection at the right price
           </p>
-          
+
           {/* Pills */}
           <div className="flex flex-wrap gap-3 justify-center mb-6">
             <div className="inline-flex items-center px-4 py-2 bg-[#EFF6FF] border border-[#3B82F6] rounded-full">
@@ -177,7 +169,7 @@ export const TierOverview = () => {
           <Collapsible open={isOpen} onOpenChange={setIsOpen} className="max-w-5xl mx-auto">
             <CollapsibleTrigger className="flex items-center justify-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-base cursor-pointer transition-colors mx-auto">
               How We Determine Your Tier
-              <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-6">
               <div className="grid md:grid-cols-2 gap-8 text-left">
@@ -197,7 +189,7 @@ export const TierOverview = () => {
                       "Fulfillment method (FBA/FBM/Both)",
                       "Business model (Private Label/Wholesale/Arbitrage)",
                       "Product category risk levels",
-                      "Related account connections"
+                      "Related account connections",
                     ].map((factor, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -206,12 +198,14 @@ export const TierOverview = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 {/* Right Column */}
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Why Comprehensive Assessment Matters:</h3>
                   <p className="text-sm text-gray-700 leading-relaxed mb-4">
-                    A 5-year-old private label account with Brand Registry needs completely different protection than a 6-month-old arbitrage account with IP complaints. Our algorithm weighs each factor to calculate your exact risk level and protection needs.
+                    A 5-year-old private label account with Brand Registry needs completely different protection than a
+                    6-month-old arbitrage account with IP complaints. Our algorithm weighs each factor to calculate your
+                    exact risk level and protection needs.
                   </p>
                   <div className="bg-[#EFF6FF] border border-blue-600 rounded-lg p-4 flex gap-3">
                     <Info className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -227,7 +221,9 @@ export const TierOverview = () => {
 
         {/* Tier Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch mb-12">
-          {tiers.map(tier => <TierCard key={tier.name} tier={tier} />)}
+          {tiers.map((tier) => (
+            <TierCard key={tier.name} tier={tier} />
+          ))}
         </div>
 
         {/* Suspension Coverage Banner */}
@@ -245,7 +241,8 @@ export const TierOverview = () => {
                   Every Plan Includes Full Suspension Protection
                 </h2>
                 <p className="text-base text-gray-600 leading-relaxed mb-6">
-                  No matter which tier you're assigned, suspension defense is always included. Our experts write your Plan of Action within 24 hours—no additional fees, no surprises.
+                  No matter which tier you're assigned, suspension defense is always included. Our experts write your
+                  Plan of Action within 24 hours—no additional fees, no surprises.
                 </p>
 
                 {/* Badges */}
@@ -271,9 +268,7 @@ export const TierOverview = () => {
         {/* Find Out Your Protection Tier Section */}
         <div className="bg-gray-50 rounded-2xl p-12 mt-16">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Find Out Your Protection Tier
-            </h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Find Out Your Protection Tier</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Complete our 12-question assessment to see your exact tier and monthly cost
             </p>
@@ -284,7 +279,12 @@ export const TierOverview = () => {
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Quick Assessment</h3>
