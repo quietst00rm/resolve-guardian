@@ -292,9 +292,9 @@ export const ProtectionWizard = () => {
   const handleContinue = () => {
     // Validation for current step
     if (currentStep === 1 && !answers.asins) return;
-    if (currentStep === 2 && !answers.suspendedBefore) return;
+    if (currentStep === 2 && !answers.revenue) return;
     if (currentStep === 3 && !answers.violations) return;
-    if (currentStep === 4 && !answers.revenue) return;
+    if (currentStep === 4 && !answers.suspendedBefore) return;
     if (currentStep === 5 && !answers.sellerType) return;
     if (currentStep === 6 && !answers.brandRegistry) return;
     if (currentStep === 7 && !answers.fulfillment) return;
@@ -416,9 +416,9 @@ export const ProtectionWizard = () => {
   const isStepValid = () => {
     switch (currentStep) {
       case 1: return !!answers.asins;
-      case 2: return !!answers.suspendedBefore;
+      case 2: return !!answers.revenue;
       case 3: return !!answers.violations;
-      case 4: return !!answers.revenue;
+      case 4: return !!answers.suspendedBefore;
       case 5: return !!answers.sellerType;
       case 6: return !!answers.brandRegistry;
       case 7: return !!answers.fulfillment;
@@ -489,30 +489,18 @@ export const ProtectionWizard = () => {
             {currentStep === 2 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  Have you been suspended before?
+                  What is your average monthly revenue on Amazon over the past 12 months?
                 </label>
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setAnswers({...answers, suspendedBefore: "Yes"})}
-                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
-                      answers.suspendedBefore === "Yes"
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-background border-border hover:border-primary"
-                    }`}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    onClick={() => setAnswers({...answers, suspendedBefore: "No"})}
-                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
-                      answers.suspendedBefore === "No"
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-background border-border hover:border-primary"
-                    }`}
-                  >
-                    No
-                  </button>
-                </div>
+                <input
+                  type="text"
+                  value={answers.revenue}
+                  onChange={(e) => setAnswers({...answers, revenue: formatRevenue(e.target.value)})}
+                  placeholder="$50,000"
+                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                />
+                <p className="text-sm text-muted-foreground mt-2">
+                  Enter your average monthly revenue from Amazon sales
+                </p>
               </div>
             )}
 
@@ -539,15 +527,30 @@ export const ProtectionWizard = () => {
             {currentStep === 4 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  What is your average monthly revenue on Amazon over the past 12 months?
+                  Have you been suspended before?
                 </label>
-                <input
-                  type="text"
-                  value={answers.revenue}
-                  onChange={(e) => setAnswers({...answers, revenue: formatRevenue(e.target.value)})}
-                  placeholder="$50,000"
-                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
-                />
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setAnswers({...answers, suspendedBefore: "Yes"})}
+                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
+                      answers.suspendedBefore === "Yes"
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background border-border hover:border-primary"
+                    }`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setAnswers({...answers, suspendedBefore: "No"})}
+                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
+                      answers.suspendedBefore === "No"
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background border-border hover:border-primary"
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
               </div>
             )}
 
@@ -670,51 +673,65 @@ export const ProtectionWizard = () => {
             {currentStep === 10 && (
               <div className="animate-fade-in">
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  Which types of violations or warnings have you received in the past 6 months?
+                  Have you received any of these violations in the past 3 months?
                 </label>
-                <p className="text-sm text-muted-foreground mb-4">Check all that apply</p>
-                <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-                  {[
-                    "Suspected IP",
-                    "Received IP",
-                    "Product Authenticity",
-                    "Product Condition Complaints",
-                    "Product Safety Complaints",
-                    "Listing Policy",
-                    "Restricted Product",
-                    "Dropshipping",
-                    "Review Manipulation",
-                    "I have not received any violations or warnings"
-                  ].map((violation) => (
-                    <label
-                      key={violation}
-                      className="flex items-start gap-3 p-4 border-2 border-border rounded-lg cursor-pointer hover:border-primary transition-all bg-background"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={(answers.violationTypes || []).includes(violation)}
-                        onChange={(e) => {
-                          const currentTypes = answers.violationTypes || [];
-                          if (violation === "I have not received any violations or warnings") {
-                            // If "none" is selected, clear all others
-                            setAnswers({
-                              ...answers,
-                              violationTypes: e.target.checked ? [violation] : []
-                            });
-                          } else {
-                            // If any other is selected, remove "none" if present
-                            const newTypes = e.target.checked
-                              ? [...currentTypes.filter(v => v !== "I have not received any violations or warnings"), violation]
-                              : currentTypes.filter(v => v !== violation);
-                            setAnswers({...answers, violationTypes: newTypes});
-                          }
-                        }}
-                        className="mt-0.5 h-5 w-5 rounded border-2 border-border text-primary focus:ring-2 focus:ring-primary/20"
-                        style={{ minWidth: '44px', minHeight: '44px' }}
-                      />
-                      <span className="text-base text-foreground leading-relaxed">{violation}</span>
-                    </label>
-                  ))}
+                
+                {/* Violation Reference List */}
+                <div className="bg-muted/50 rounded-lg p-4 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm md:text-base">
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Product Authenticity</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Restricted Product</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Condition Complaints</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Dropshipping</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Product Safety</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Review Manipulation</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground">Listing Policy</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Yes/No Buttons */}
+                <div className="flex flex-col md:flex-row gap-4">
+                  <button
+                    onClick={() => setAnswers({...answers, violationTypes: ["Yes"]})}
+                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all ${
+                      (answers.violationTypes || []).includes("Yes")
+                        ? "bg-red-50 text-red-700 border-red-500"
+                        : "bg-background border-border text-foreground hover:border-red-400"
+                    }`}
+                  >
+                    Yes, I've received violations
+                  </button>
+                  <button
+                    onClick={() => setAnswers({...answers, violationTypes: ["No"]})}
+                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all ${
+                      (answers.violationTypes || []).includes("No")
+                        ? "bg-green-50 text-green-700 border-green-500"
+                        : "bg-background border-border text-foreground hover:border-green-400"
+                    }`}
+                  >
+                    No violations received
+                  </button>
                 </div>
               </div>
             )}
