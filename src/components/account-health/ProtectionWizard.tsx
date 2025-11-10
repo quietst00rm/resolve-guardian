@@ -203,6 +203,7 @@ export const ProtectionWizard = () => {
   const [assignedTier, setAssignedTier] = useState<string>("");
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -278,18 +279,30 @@ export const ProtectionWizard = () => {
     }
 
     if (currentStep === 12) {
-      // Calculate tier
-      const revenue = parseRevenue(answers.revenue);
-      const tier = calculateTier(revenue);
-      if (tier === "NOT_ELIGIBLE") {
-        toast({
-          title: "Minimum revenue not met",
-          description: "Our plans start at $100K annual revenue. Contact us for custom options.",
-          variant: "destructive"
-        });
-        return;
-      }
-      setAssignedTier(tier);
+      // Start analyzing animation
+      setIsAnalyzing(true);
+      
+      // Calculate tier after 3.5 second delay
+      setTimeout(() => {
+        const revenue = parseRevenue(answers.revenue);
+        const tier = calculateTier(revenue);
+        
+        if (tier === "NOT_ELIGIBLE") {
+          setIsAnalyzing(false);
+          toast({
+            title: "Minimum revenue not met",
+            description: "Our plans start at $100K annual revenue. Contact us for custom options.",
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        setAssignedTier(tier);
+        setIsAnalyzing(false);
+        setCurrentStep(currentStep + 1);
+      }, 3500);
+      
+      return; // Don't immediately move to next step
     }
 
     setCurrentStep(currentStep + 1);
@@ -366,7 +379,7 @@ export const ProtectionWizard = () => {
     handleSubmit();
   };
 
-  const progressPercentage = (currentStep / 12) * 100;
+  const progressPercentage = isAnalyzing ? 100 : (currentStep / 12) * 100;
 
   const isStepValid = () => {
     switch (currentStep) {
@@ -406,7 +419,7 @@ export const ProtectionWizard = () => {
           <div className="bg-card rounded-2xl shadow-2xl p-12 border border-border min-h-[500px]">
             
             {/* Progress Bar */}
-            {currentStep <= 12 && (
+            {currentStep <= 12 && !isAnalyzing && (
               <div className="mb-8">
                 <div className="text-center text-sm font-semibold text-muted-foreground mb-3">
                   Question {currentStep} of 12
@@ -702,6 +715,54 @@ export const ProtectionWizard = () => {
                   className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
                 />
                 <p className="text-sm text-muted-foreground mt-2">Optional</p>
+              </div>
+            )}
+
+            {/* AI Analysis Loading Screen */}
+            {isAnalyzing && (
+              <div className="text-center animate-fade-in py-12">
+                <h3 className="text-3xl font-bold text-foreground mb-4">
+                  Analyzing Your Business Profile
+                </h3>
+                <p className="text-lg text-muted-foreground mb-12 max-w-lg mx-auto">
+                  Our AI is evaluating your responses to determine the optimal protection tier...
+                </p>
+                
+                {/* Animated Loader */}
+                <div className="relative w-32 h-32 mx-auto mb-8">
+                  <div className="absolute inset-0 rounded-full border-4 border-muted"></div>
+                  <div 
+                    className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin"
+                    style={{ animationDuration: '1s' }}
+                  ></div>
+                  <div 
+                    className="absolute inset-2 rounded-full border-4 border-transparent border-t-accent animate-spin"
+                    style={{ animationDuration: '1.5s', animationDirection: 'reverse' }}
+                  ></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 bg-primary/20 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                
+                {/* Analysis Steps */}
+                <div className="max-w-md mx-auto space-y-3 text-left">
+                  <div className="flex items-center gap-3 text-muted-foreground animate-fade-in">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <span>Evaluating business metrics...</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground animate-fade-in" style={{ animationDelay: '0.5s' }}>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <span>Analyzing risk profile...</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground animate-fade-in" style={{ animationDelay: '1s' }}>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <span>Matching optimal protection tier...</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground animate-fade-in" style={{ animationDelay: '1.5s' }}>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                    <span>Generating personalized recommendation...</span>
+                  </div>
+                </div>
               </div>
             )}
 
