@@ -27,9 +27,9 @@ export const VisualProcessFlow = () => {
     {
       number: "02",
       icon: FileText,
-      title: "Custom POAs by Ex-Amazon Insiders",
-      description: "No templates. Every Plan of Action addresses the specific violation with proper documentation and prevention measures.",
-      expandedContent: "Our team of former Amazon policy specialists drafts each POA from scratch, incorporating the specific details of your violation, your business context, and Amazon's current requirements. Every POA includes root cause analysis, corrective actions, and preventive measures."
+      title: "Expert POAs Crafted From 8,500+ Successful Cases",
+      description: "Zero templates. Every appeal engineered using proven frameworks that have achieved 94% success across every violation type.",
+      expandedContent: "Our reinstatement specialists have successfully reversed 8,500+ suspensions, giving us unmatched insight into what Amazon actually approves. We've documented every successful appeal pattern, every rejection reason, and every policy nuance. This data-driven approach means your POA includes the exact elements Amazon requires: comprehensive root cause analysis, detailed corrective actions with evidence, and bulletproof preventive measures that demonstrate long-term compliance."
     },
     {
       number: "03",
@@ -107,12 +107,41 @@ export const VisualProcessFlow = () => {
                   </button>
 
                   {/* Expanded Content */}
-                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-96 opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[600px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
                     <div className="relative bg-gradient-to-br from-primary/5 to-blue-500/5 border border-primary/20 p-6 rounded-xl text-left shadow-lg">
                       <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-blue-600 rounded-l-xl"></div>
-                      <p className="text-sm text-foreground/80 leading-relaxed pl-3">
+                      <p className="text-sm text-foreground/80 leading-relaxed pl-3 mb-4">
                         {step.expandedContent}
                       </p>
+                      
+                      {/* Metric Badges - Only for Step 02 */}
+                      {index === 1 && (
+                        <div className="flex flex-wrap gap-3 mt-4 pl-3">
+                          {/* Badge 1: POAs Approved */}
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-[#10B98120] border border-[#10B981]/30">
+                            <svg className="w-4 h-4 text-[#10B981]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="text-xs font-semibold text-[#047857]">8,500+ POAs Approved</span>
+                          </div>
+                          
+                          {/* Badge 2: Success Rate */}
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-[#3B82F620] border border-[#3B82F6]/30">
+                            <svg className="w-4 h-4 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                            <span className="text-xs font-semibold text-[#1E40AF]">98.7% Success Rate</span>
+                          </div>
+                          
+                          {/* Badge 3: Every Violation Type */}
+                          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-[#8B5CF620] border border-[#8B5CF6]/30">
+                            <svg className="w-4 h-4 text-[#8B5CF6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span className="text-xs font-semibold text-[#6D28D9]">Every Violation Type</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
