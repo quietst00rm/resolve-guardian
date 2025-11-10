@@ -289,15 +289,16 @@ export const ProtectionWizard = () => {
     return "";
   };
 
+  const autoAdvance = (callback: () => void) => {
+    setTimeout(() => {
+      callback();
+      setCurrentStep(currentStep + 1);
+    }, 300);
+  };
+
   const handleContinue = () => {
     // Validation for current step
-    if (currentStep === 1 && !answers.asins) return;
     if (currentStep === 2 && !answers.revenue) return;
-    if (currentStep === 3 && !answers.violations) return;
-    if (currentStep === 4 && !answers.suspendedBefore) return;
-    if (currentStep === 5 && !answers.sellerType) return;
-    if (currentStep === 6 && !answers.brandRegistry) return;
-    if (currentStep === 7 && !answers.fulfillment) return;
     if (currentStep === 11) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(answers.email)) {
@@ -310,7 +311,7 @@ export const ProtectionWizard = () => {
       }
     }
 
-    if (currentStep === 12) {
+    if (currentStep === 11) {
       // Start analyzing animation
       setIsAnalyzing(true);
       
@@ -411,22 +412,12 @@ export const ProtectionWizard = () => {
     handleSubmit();
   };
 
-  const progressPercentage = isAnalyzing ? 100 : (currentStep / 12) * 100;
+  const progressPercentage = isAnalyzing ? 100 : (currentStep / 11) * 100;
 
   const isStepValid = () => {
     switch (currentStep) {
-      case 1: return !!answers.asins;
       case 2: return !!answers.revenue;
-      case 3: return !!answers.violations;
-      case 4: return !!answers.suspendedBefore;
-      case 5: return !!answers.sellerType;
-      case 6: return !!answers.brandRegistry;
-      case 7: return !!answers.fulfillment;
-      case 8: return !!answers.accountAge;
-      case 9: return !!answers.ipComplaints;
-      case 10: return (answers.violationTypes || []).length > 0;
       case 11: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email);
-      case 12: return true;
       default: return false;
     }
   };
@@ -435,7 +426,7 @@ export const ProtectionWizard = () => {
     <section id="protection-wizard" className="bg-muted/30 py-20">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        {currentStep <= 12 && (
+        {currentStep <= 11 && (
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Find Your Protection Plan
@@ -451,10 +442,10 @@ export const ProtectionWizard = () => {
           <div className="bg-card rounded-2xl shadow-2xl p-12 border border-border min-h-[500px]">
             
             {/* Progress Bar */}
-            {currentStep <= 12 && !isAnalyzing && (
+            {currentStep <= 11 && !isAnalyzing && (
               <div className="mb-8">
                 <div className="text-center text-sm font-semibold text-muted-foreground mb-3">
-                  Question {currentStep} of 12
+                  Step {currentStep} of 11
                 </div>
                 <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                   <div 
@@ -468,12 +459,27 @@ export const ProtectionWizard = () => {
             {/* Question Steps */}
             {currentStep === 1 && (
               <div className="animate-fade-in">
+                {currentStep > 1 && (
+                  <button
+                    onClick={handleBack}
+                    className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back
+                  </button>
+                )}
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How many ASINs are you currently managing?
                 </label>
                 <select
                   value={answers.asins}
-                  onChange={(e) => setAnswers({...answers, asins: e.target.value})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setAnswers({...answers, asins: value});
+                    if (value) {
+                      autoAdvance(() => {});
+                    }
+                  }}
                   className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
                 >
                   <option value="">Select...</option>
@@ -488,6 +494,13 @@ export const ProtectionWizard = () => {
 
             {currentStep === 2 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   What is your average monthly revenue on Amazon over the past 12 months?
                 </label>
@@ -506,12 +519,25 @@ export const ProtectionWizard = () => {
 
             {currentStep === 3 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How many violations do you receive per month on average?
                 </label>
                 <select
                   value={answers.violations}
-                  onChange={(e) => setAnswers({...answers, violations: e.target.value})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setAnswers({...answers, violations: value});
+                    if (value) {
+                      autoAdvance(() => {});
+                    }
+                  }}
                   className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
                 >
                   <option value="">Select...</option>
@@ -526,12 +552,22 @@ export const ProtectionWizard = () => {
 
             {currentStep === 4 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   Have you been suspended before?
                 </label>
                 <div className="flex gap-4">
                   <button
-                    onClick={() => setAnswers({...answers, suspendedBefore: "Yes"})}
+                    onClick={() => {
+                      setAnswers({...answers, suspendedBefore: "Yes"});
+                      autoAdvance(() => {});
+                    }}
                     className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
                       answers.suspendedBefore === "Yes"
                         ? "bg-primary text-primary-foreground border-primary"
@@ -541,7 +577,10 @@ export const ProtectionWizard = () => {
                     Yes
                   </button>
                   <button
-                    onClick={() => setAnswers({...answers, suspendedBefore: "No"})}
+                    onClick={() => {
+                      setAnswers({...answers, suspendedBefore: "No"});
+                      autoAdvance(() => {});
+                    }}
                     className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
                       answers.suspendedBefore === "No"
                         ? "bg-primary text-primary-foreground border-primary"
@@ -556,6 +595,13 @@ export const ProtectionWizard = () => {
 
             {currentStep === 5 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   What type of seller are you?
                 </label>
@@ -563,8 +609,11 @@ export const ProtectionWizard = () => {
                   {["Private Label", "Wholesale", "Hybrid", "Dropshipping", "Online/Retail Arbitrage"].map((type) => (
                     <button
                       key={type}
-                      onClick={() => setAnswers({...answers, sellerType: type})}
-                      className={`w-full h-16 px-6 text-left text-base font-semibold border-2 rounded-lg transition-all ${
+                      onClick={() => {
+                        setAnswers({...answers, sellerType: type});
+                        autoAdvance(() => {});
+                      }}
+                      className={`w-full h-16 px-6 text-left text-base font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                         answers.sellerType === type
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-background border-border hover:border-primary"
@@ -579,13 +628,23 @@ export const ProtectionWizard = () => {
 
             {currentStep === 6 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   Are you enrolled in Amazon Brand Registry?
                 </label>
                 <div className="flex gap-4">
                   <button
-                    onClick={() => setAnswers({...answers, brandRegistry: "Yes"})}
-                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
+                    onClick={() => {
+                      setAnswers({...answers, brandRegistry: "Yes"});
+                      autoAdvance(() => {});
+                    }}
+                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                       answers.brandRegistry === "Yes"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background border-border hover:border-primary"
@@ -594,8 +653,11 @@ export const ProtectionWizard = () => {
                     Yes
                   </button>
                   <button
-                    onClick={() => setAnswers({...answers, brandRegistry: "No"})}
-                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all ${
+                    onClick={() => {
+                      setAnswers({...answers, brandRegistry: "No"});
+                      autoAdvance(() => {});
+                    }}
+                    className={`flex-1 h-20 text-lg font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                       answers.brandRegistry === "No"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background border-border hover:border-primary"
@@ -609,6 +671,13 @@ export const ProtectionWizard = () => {
 
             {currentStep === 7 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How do you fulfill your Amazon orders?
                 </label>
@@ -616,8 +685,11 @@ export const ProtectionWizard = () => {
                   {["FBA (Fulfilled by Amazon)", "FBM (Fulfilled by Merchant)", "Both FBA and FBM"].map((method) => (
                     <button
                       key={method}
-                      onClick={() => setAnswers({...answers, fulfillment: method})}
-                      className={`w-full h-16 px-6 text-left text-base font-semibold border-2 rounded-lg transition-all ${
+                      onClick={() => {
+                        setAnswers({...answers, fulfillment: method});
+                        autoAdvance(() => {});
+                      }}
+                      className={`w-full h-16 px-6 text-left text-base font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                         answers.fulfillment === method
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-background border-border hover:border-primary"
@@ -632,12 +704,25 @@ export const ProtectionWizard = () => {
 
             {currentStep === 8 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How long has your Amazon seller account been active?
                 </label>
                 <select
                   value={answers.accountAge}
-                  onChange={(e) => setAnswers({...answers, accountAge: e.target.value})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setAnswers({...answers, accountAge: value});
+                    if (value) {
+                      autoAdvance(() => {});
+                    }
+                  }}
                   className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
                 >
                   <option value="">Select account age...</option>
@@ -652,12 +737,25 @@ export const ProtectionWizard = () => {
 
             {currentStep === 9 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   How many Intellectual Property complaints have you received in the past 6 months?
                 </label>
                 <select
                   value={answers.ipComplaints}
-                  onChange={(e) => setAnswers({...answers, ipComplaints: e.target.value})}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setAnswers({...answers, ipComplaints: value});
+                    if (value) {
+                      autoAdvance(() => {});
+                    }
+                  }}
                   className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
                 >
                   <option value="">Select...</option>
@@ -672,6 +770,13 @@ export const ProtectionWizard = () => {
 
             {currentStep === 10 && (
               <div className="animate-fade-in">
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
                 <label className="text-2xl font-semibold text-foreground mb-6 block">
                   Have you received any of these violations in the past 3 months?
                 </label>
@@ -713,8 +818,11 @@ export const ProtectionWizard = () => {
                 {/* Yes/No Buttons */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <button
-                    onClick={() => setAnswers({...answers, violationTypes: ["Yes"]})}
-                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all ${
+                    onClick={() => {
+                      setAnswers({...answers, violationTypes: ["Yes"]});
+                      autoAdvance(() => {});
+                    }}
+                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                       (answers.violationTypes || []).includes("Yes")
                         ? "bg-red-50 text-red-700 border-red-500"
                         : "bg-background border-border text-foreground hover:border-red-400"
@@ -723,8 +831,11 @@ export const ProtectionWizard = () => {
                     Yes, I've received violations
                   </button>
                   <button
-                    onClick={() => setAnswers({...answers, violationTypes: ["No"]})}
-                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all ${
+                    onClick={() => {
+                      setAnswers({...answers, violationTypes: ["No"]});
+                      autoAdvance(() => {});
+                    }}
+                    className={`flex-1 py-4 md:py-3 text-base md:text-lg font-semibold border-2 rounded-lg transition-all min-h-[48px] ${
                       (answers.violationTypes || []).includes("No")
                         ? "bg-green-50 text-green-700 border-green-500"
                         : "bg-background border-border text-foreground hover:border-green-400"
@@ -738,32 +849,49 @@ export const ProtectionWizard = () => {
 
             {currentStep === 11 && (
               <div className="animate-fade-in">
-                <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  What's your business email?
-                </label>
-                <input
-                  type="email"
-                  value={answers.email}
-                  onChange={(e) => setAnswers({...answers, email: e.target.value})}
-                  placeholder="you@yourbusiness.com"
-                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
-                />
-              </div>
-            )}
+                <button
+                  onClick={handleBack}
+                  className="mb-4 text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
+                <h3 className="text-2xl font-semibold text-foreground mb-8">
+                  Contact Information
+                </h3>
+                
+                <div className="space-y-6">
+                  {/* Email Input - Required */}
+                  <div>
+                    <label className="text-base font-semibold text-foreground mb-2 block">
+                      Business Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      value={answers.email}
+                      onChange={(e) => setAnswers({...answers, email: e.target.value})}
+                      placeholder="you@yourbusiness.com"
+                      className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                    />
+                  </div>
 
-            {currentStep === 12 && (
-              <div className="animate-fade-in">
-                <label className="text-2xl font-semibold text-foreground mb-6 block">
-                  What's your phone number?
-                </label>
-                <input
-                  type="tel"
-                  value={answers.phone}
-                  onChange={(e) => setAnswers({...answers, phone: e.target.value})}
-                  placeholder="(555) 123-4567"
-                  className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
-                />
-                <p className="text-sm text-muted-foreground mt-2">Optional</p>
+                  {/* Phone Input - Optional */}
+                  <div>
+                    <label className="text-base font-semibold text-foreground mb-2 block">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={answers.phone}
+                      onChange={(e) => setAnswers({...answers, phone: e.target.value})}
+                      placeholder="(555) 123-4567"
+                      className="w-full h-14 px-4 text-base border-2 border-border rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all bg-background"
+                    />
+                    <p className="text-sm text-muted-foreground mt-2 flex items-center gap-1">
+                      📞 Optional
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -1164,8 +1292,8 @@ export const ProtectionWizard = () => {
               </div>
             )}
 
-            {/* Navigation Buttons */}
-            {currentStep >= 1 && currentStep <= 12 && (
+            {/* Navigation Buttons - Only show for manual continue steps */}
+            {(currentStep === 2 || currentStep === 11) && (
               <div className="mt-8">
                 <Button
                   onClick={handleContinue}
@@ -1173,18 +1301,8 @@ export const ProtectionWizard = () => {
                   size="lg"
                   className="w-full"
                 >
-                  Continue
+                  {currentStep === 11 ? "Complete Assessment →" : "Continue →"}
                 </Button>
-                
-                {currentStep > 1 && (
-                  <button
-                    onClick={handleBack}
-                    className="mt-4 text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 mx-auto"
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                  </button>
-                )}
               </div>
             )}
           </div>
