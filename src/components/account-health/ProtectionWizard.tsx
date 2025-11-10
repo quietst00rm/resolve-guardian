@@ -210,6 +210,23 @@ export const ProtectionWizard = () => {
     return Math.round(value).toLocaleString('en-US');
   };
 
+  // Helper function to abbreviate large numbers for mobile
+  const abbreviateNumber = (value: number): string => {
+    if (value < 10000) {
+      // Numbers under 10,000: Display normally
+      return Math.round(value).toLocaleString('en-US');
+    } else if (value < 1000000) {
+      // Numbers 10,000-999,999: Display as K
+      return `${(value / 1000).toFixed(1)}K`;
+    } else if (value < 1000000000) {
+      // Numbers 1M-999M: Display as M
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else {
+      // Numbers over 1B: Display as B
+      return `${(value / 1000000000).toFixed(1)}B`;
+    }
+  };
+
   // Helper function to calculate suspension costs
   const calculateSuspensionCosts = (monthlyRevenue: number) => {
     const daily = monthlyRevenue / 30;
@@ -816,8 +833,8 @@ export const ProtectionWizard = () => {
                     const daysOfLosses = (annualProtectionCost / costs.daily).toFixed(1);
                     
                     return (
-                      <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-4 mb-6">
-                        {/* Header */}
+                      <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-3 md:p-4 mb-6">
+                        {/* Header - Same on all devices */}
                         <div className="flex items-center gap-2 mb-4">
                           <svg
                             className="w-5 h-5 text-[#DC2626] flex-shrink-0"
@@ -837,15 +854,42 @@ export const ProtectionWizard = () => {
                           </h5>
                         </div>
                         
-                        {/* Main Display - Daily Loss (Focal Point) */}
-                        <div className="text-center mb-4">
-                          <p className="text-2xl font-bold text-red-700">
+                        {/* Main Display - Daily Loss (Responsive) */}
+                        <div className="text-center mb-3 md:mb-4">
+                          {/* Mobile: Split into two lines */}
+                          <div className="md:hidden">
+                            <p className="text-sm text-red-600 mb-1">💰 Daily Loss:</p>
+                            <p className="text-xl font-bold text-red-700">
+                              ${abbreviateNumber(costs.daily)}
+                            </p>
+                          </div>
+                          {/* Desktop: Single line */}
+                          <p className="hidden md:block text-2xl font-bold text-red-700">
                             💰 Daily Loss: ${formatCurrency(costs.daily)}
                           </p>
                         </div>
                         
-                        {/* Secondary Timeframes - 3-Column Grid */}
-                        <div className="grid grid-cols-3 gap-2 mb-4 text-center">
+                        {/* Divider on mobile only */}
+                        <div className="border-b border-red-200 mb-3 md:hidden"></div>
+                        
+                        {/* Secondary Timeframes - Responsive Layout */}
+                        {/* Mobile: Inline with bars */}
+                        <div className="md:hidden flex flex-wrap justify-around items-center text-xs mb-3 gap-1">
+                          <span className="text-gray-700">
+                            📅 Week: <span className="font-medium">${abbreviateNumber(costs.weekly)}</span>
+                          </span>
+                          <span className="text-gray-400">|</span>
+                          <span className="text-gray-700">
+                            📆 Month: <span className="font-medium">${abbreviateNumber(costs.monthly)}</span>
+                          </span>
+                          <span className="text-gray-400">|</span>
+                          <span className="text-gray-700">
+                            📊 Year: <span className="font-medium">${abbreviateNumber(costs.yearly)}</span>
+                          </span>
+                        </div>
+                        
+                        {/* Desktop: 3-Column Grid */}
+                        <div className="hidden md:grid md:grid-cols-3 gap-2 mb-4 text-center">
                           <div>
                             <p className="text-sm text-gray-700 mb-1">📅 Weekly</p>
                             <p className="text-base font-medium text-gray-700">
@@ -866,9 +910,16 @@ export const ProtectionWizard = () => {
                           </div>
                         </div>
                         
-                        {/* Simple Value Statement */}
+                        {/* Simple Value Statement - Responsive Text */}
                         <p className="text-xs italic text-gray-600 text-center">
-                          Protection = Less than {daysOfLosses} days of losses per year
+                          {/* Mobile: Shortened text */}
+                          <span className="md:hidden">
+                            Protection = Less than {daysOfLosses} days of losses/year
+                          </span>
+                          {/* Desktop: Full text */}
+                          <span className="hidden md:inline">
+                            Protection = Less than {daysOfLosses} days of losses per year
+                          </span>
                         </p>
                       </div>
                     );
