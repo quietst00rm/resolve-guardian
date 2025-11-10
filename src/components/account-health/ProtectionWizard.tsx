@@ -832,6 +832,22 @@ export const ProtectionWizard = () => {
                     const annualProtectionCost = protectionPrice * 12;
                     const daysOfLosses = (annualProtectionCost / costs.daily).toFixed(1);
                     
+                    // Calculate hours of monthly revenue
+                    const hoursOfRevenue = protectionPrice / (monthlyRevenue / 730);
+                    
+                    // Format hours with appropriate rounding
+                    let formattedHours: string;
+                    if (hoursOfRevenue >= 100) {
+                      // Edge case: over 100 hours
+                      formattedHours = "secured";
+                    } else if (hoursOfRevenue < 10) {
+                      // Under 10 hours: 1 decimal place
+                      formattedHours = hoursOfRevenue.toFixed(1);
+                    } else {
+                      // 10+ hours: whole number
+                      formattedHours = Math.round(hoursOfRevenue).toString();
+                    }
+                    
                     return (
                       <div className="bg-[#FEF2F2] border-2 border-[#FCA5A5] rounded-lg p-3 md:p-4 mb-6">
                         {/* Header - Same on all devices */}
@@ -910,16 +926,27 @@ export const ProtectionWizard = () => {
                           </div>
                         </div>
                         
-                        {/* Simple Value Statement - Responsive Text */}
+                        {/* Hours-Based Value Statement - Responsive Text */}
                         <p className="text-xs italic text-gray-600 text-center">
-                          {/* Mobile: Shortened text */}
-                          <span className="md:hidden">
-                            Protection = Less than {daysOfLosses} days of losses/year
-                          </span>
-                          {/* Desktop: Full text */}
-                          <span className="hidden md:inline">
-                            Protection = Less than {daysOfLosses} days of losses per year
-                          </span>
+                          {formattedHours === "secured" ? (
+                            // Edge case display
+                            <>
+                              <span className="md:hidden">💡 Protection investment secured</span>
+                              <span className="hidden md:inline">💡 Protection investment secured</span>
+                            </>
+                          ) : (
+                            // Normal hours display
+                            <>
+                              {/* Mobile: Shortened version */}
+                              <span className="md:hidden">
+                                💡 Costs {formattedHours} hours of monthly revenue
+                              </span>
+                              {/* Desktop: Full version */}
+                              <span className="hidden md:inline">
+                                💡 Protection costs what you earn in {formattedHours} hours per month
+                              </span>
+                            </>
+                          )}
                         </p>
                       </div>
                     );
