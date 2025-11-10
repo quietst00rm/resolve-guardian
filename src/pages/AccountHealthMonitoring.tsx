@@ -27,7 +27,7 @@ const AccountHealthMonitoring = () => {
       <VisualProcessFlow />
 
       {/* Interactive Pricing Calculator */}
-      <InteractivePricingCalculator />
+      
 
       {/* Tier Overview Display */}
       <TierOverview />
